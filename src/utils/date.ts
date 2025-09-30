@@ -80,6 +80,7 @@ export const getWeekDate = (date: Date = new Date()) => {
 
 export const getDayDate = () => {
   const day = new Date();
+  day.setHours(0, 0, 0, 0);
   return day;
 };
 
@@ -350,8 +351,6 @@ export const createArrayFromMonths = (startMonth: string, endMonth: string) => {
     const nextMonth = addMonths(date, 1);
     currentMonth = formatDate(nextMonth, 'yyyy/MM');
   } while (currentMonth <= endMonth);
-
-  result.push(endMonth);
 
   return result;
 };
