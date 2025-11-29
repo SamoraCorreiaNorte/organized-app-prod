@@ -9,12 +9,11 @@ import {
   setIsSupportOpen,
   setOfflineOverride,
 } from '@services/states/app';
-import useStartup from '@features/app_start/vip/startup/useStartup';
 import useInternetChecker from '@hooks/useInternetChecker';
 import { displaySnackNotification } from '@services/states/app';
 import { IconNoConnection } from '@components/icons';
 import useAppTranslation from '@hooks/useAppTranslation';
-import { useBreakpoints } from '@hooks/index';
+import { useBreakpoints, useUserAutoLogin } from '@hooks/index';
 import {
   congAccountConnectedState,
   isAppLoadState,
@@ -42,7 +41,7 @@ const useNavbar = () => {
 
   const isOffline = isAppLoad ? false : !isCongAccountConnected;
 
-  const { runStartupCheck } = useStartup();
+  const { manualAutoLoginVip } = useUserAutoLogin();
   const { isNavigatorOnline } = useInternetChecker();
   const { t } = useAppTranslation();
   const openMore = Boolean(anchorEl);
@@ -83,7 +82,28 @@ const useNavbar = () => {
       });
       return;
     }
-    await runStartupCheck();
+    //await runStartupCheck();
+    await manualAutoLoginVip();
+  };
+
+  // Clear all cookies, localStorage, sessionStorage, and IndexedDB, then reload
+  const handleClearCookies = () => {
+    document.cookie.split(';').forEach((cookie) => {
+      const name = cookie.split('=')[0].trim();
+      document.cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+    });
+
+    localStorage.clear();
+
+    indexedDB.databases().then((dbs) => {
+      dbs.forEach((db) => indexedDB.deleteDatabase(db.name));
+    });
+
+    caches.keys().then((keys) => {
+      keys.forEach((key) => caches.delete(key));
+    });
+
+    location.reload();
   };
 
   const handleOpenContact = async () => {
@@ -144,6 +164,7 @@ const useNavbar = () => {
     accountType,
     handleDisonnectAccount,
     isOffline,
+    handleClearCookies,
   };
 };
 
