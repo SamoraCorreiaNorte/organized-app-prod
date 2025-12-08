@@ -1,4 +1,4 @@
-import { ListItem } from '@mui/material';
+import { CircularProgress, ListItem } from '@mui/material';
 import {
   IconFootprint,
   IconMinistryReport,
@@ -14,8 +14,14 @@ import MinistryTimer from '@features/ministry/report/ministry_timer';
 const MinistryCard = () => {
   const { t } = useAppTranslation();
 
-  const { isPioneer, enable_AP_application, hours, hours_balance } =
-    useMinistry();
+  const {
+    isPioneer,
+    enable_AP_application,
+    hours,
+    hours_balance,
+    fieldServiceMeetingCount,
+    fieldServiceMeetingCountLoading,
+  } = useMinistry();
 
   return (
     <DashboardCard header={t('tr_ministry')}>
@@ -44,7 +50,24 @@ const MinistryCard = () => {
       <ListItem disablePadding>
         <DashboardMenu
           icon={<IconFootprint color="var(--black)" />}
-          primaryText={t('tr_fieldServiceMeetings')}
+          primaryText={t('tr_fieldServiceMeetingsShort')}
+          badgeText={
+            fieldServiceMeetingCountLoading ? (
+              <CircularProgress
+                size={14}
+                thickness={6}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '2px 0px',
+                  color: 'var(--accent-dark)',
+                }}
+              />
+            ) : fieldServiceMeetingCount && fieldServiceMeetingCount > 0 ? (
+              `${fieldServiceMeetingCount}`
+            ) : null
+          }
           path="/field-service-meetings"
         />
       </ListItem>
