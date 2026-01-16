@@ -61,6 +61,7 @@
   "tr_next": "Next",
   "tr_oauthGoogle": "Google",
   "tr_oauthYahoo": "Yahoo",
+  "tr_oauthMicrosoft": "Microsoft",
   "tr_sendLink": "Send Link",
   "tr_emailNotSupported": "Sorry, this email is invalid or not supported",
   "tr_selectCountry": "Country",

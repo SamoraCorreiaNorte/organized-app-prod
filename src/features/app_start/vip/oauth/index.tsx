@@ -2,6 +2,7 @@ import { Box, Stack } from '@mui/material';
 import { useAppTranslation } from '@hooks/index';
 import Divider from '@components/divider';
 import OAuthGoogle from './google';
+import OAuthMicrosoft from './microsoft';
 import OAuthEmail from './email';
 import Typography from '@components/typography';
 
@@ -21,6 +22,7 @@ const OAuth = () => {
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <OAuthGoogle />
+          <OAuthMicrosoft />
         </Box>
       </Stack>
     </>
