@@ -239,12 +239,12 @@ const App = ({ updatePwa }: { updatePwa: VoidFunction }) => {
             },
 
             // midweek editor routes
-            {
-              element: <RouteProtected allowed={isMidweekEditor} />,
-              children: [
-                { path: '/midweek-meeting', element: <MidweekMeeting /> },
-              ],
-            },
+            // {
+            //   element: <RouteProtected allowed={isMidweekEditor} />,
+            //   children: [
+            //     { path: '/midweek-meeting', element: <MidweekMeeting /> },
+            //   ],
+            // },
 
             // weekend editor routes
             {
