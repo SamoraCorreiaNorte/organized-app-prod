@@ -4,8 +4,7 @@ import useMeetingDuties from './useDuties';
 import DutiesEditor from '@features/meetings/duties_schedule/duties_editor';
 import PageTitle from '@components/page_title';
 import QuickSettingsMeetingDuties from '@features/meetings/duties_schedule/quick_settings';
-import WeekSelector from '@features/meetings/week_selector';
-
+import WeekSelector from '@features/meetings/duties_schedule/week_selector';
 const MeetingDuties = () => {
   const { t } = useAppTranslation();
 
@@ -39,7 +38,7 @@ const MeetingDuties = () => {
           alignItems: desktopUp ? 'flex-start' : 'unset',
         }}
       >
-        <WeekSelector />
+        <WeekSelector meetingType="duties" />
         <DutiesEditor />
       </Box>
     </Box>

@@ -1,32 +1,20 @@
 import { Box, Stack } from '@mui/material';
-import {
-  IconInfo,
-  IconNavigateLeft,
-  IconNavigateRight,
-} from '@components/icons';
-import { useAppTranslation, useBreakpoints } from '@hooks/index';
+import { IconInfo } from '@components/icons';
+import { useAppTranslation } from '@hooks/index';
 import useDutiesEditor from './useDutiesEditor';
 import AudioVideo from '../audio_video';
 import AuditoriumAttendant from '../auditorium_attendant';
 import Divider from '@components/divider';
 import EntranceAttendant from '../entrance_attendant';
-import Hospitality from '../hospitality';
-import IconButton from '@components/icon_button';
 import Microphones from '../microphones';
 import Stage from '../stage';
 import Typography from '@components/typography';
+import VideoConference from '../video_conference';
 
 const DutiesEditor = () => {
   const { t } = useAppTranslation();
 
-  const { tablet500Down } = useBreakpoints();
-
-  const {
-    weekDateLocale,
-    showWeekNav,
-    handleChangeWeekBack,
-    handleChangeWeekNext,
-  } = useDutiesEditor();
+  const { weekDateLocale, dayType } = useDutiesEditor();
 
   return (
     <Box
@@ -38,7 +26,7 @@ const DutiesEditor = () => {
         flexGrow: 1,
       }}
     >
-      {weekDateLocale.length === 0 && (
+      {weekDateLocale?.length === 0 && (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <IconInfo color="var(--accent-400)" />
           <Typography color="var(--grey-400)">
@@ -47,10 +35,10 @@ const DutiesEditor = () => {
         </Box>
       )}
 
-      {weekDateLocale.length > 0 && (
+      {weekDateLocale?.length > 0 && (
         <Stack spacing="16px">
           {/* week navigation */}
-          <Stack
+          {/* <Stack
             direction="row"
             spacing="16px"
             justifyContent={tablet500Down && 'space-between'}
@@ -86,32 +74,32 @@ const DutiesEditor = () => {
             </IconButton>
           </Stack>
 
-          <Divider color="var(--accent-200)" />
+          <Divider color="var(--accent-200)" /> */}
 
           {/* audio video duties */}
-          <Stack spacing="12px">
+
+          <Stack spacing="20px">
             <Typography className="h4">{t('tr_dutiesAudio')}</Typography>
-            <AudioVideo />
-            <Microphones />
-            <Stage />
+            <AudioVideo dayType={dayType} />
+            <Microphones dayType={dayType} />
+            <Stage dayType={dayType} />
+            <VideoConference dayType={dayType} />
           </Stack>
 
           <Divider color="var(--accent-200)" />
 
           {/* attendants duties */}
-          <Stack spacing="12px">
-            <Typography className="h4">{t('tr_hall')}</Typography>
-            <EntranceAttendant />
-            <AuditoriumAttendant />
+          <Stack spacing="20px">
+            <Typography className="h4">{t('tr_attendants')}</Typography>
+            <EntranceAttendant dayType={dayType} />
+            <AuditoriumAttendant dayType={dayType} />
           </Stack>
-
-          <Divider color="var(--accent-200)" />
 
           {/* other duties */}
-          <Stack spacing="12px">
+          {/* <Stack spacing="12px">
             <Typography className="h4">{t('tr_otherPart')}</Typography>
             <Hospitality />
-          </Stack>
+          </Stack> */}
         </Stack>
       )}
     </Box>

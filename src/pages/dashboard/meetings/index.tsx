@@ -49,6 +49,14 @@ const MeetingsCard = ({ assignmentCount }: MeetingsCardProps) => {
         />
       </ListItem>
 
+      <ListItem disablePadding>
+        <DashboardMenu
+          icon={<IconCalendarWeek color="var(--black)" />}
+          primaryText={t('tr_editSchedules')}
+          path="/edit-schedules"
+        />
+      </ListItem>
+
       {showDuties && isDutiesEditor && (
         <ListItem disablePadding>
           <DashboardMenu

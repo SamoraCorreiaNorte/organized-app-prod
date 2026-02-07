@@ -1,17 +1,24 @@
 import { Grid, Stack } from '@mui/material';
 import { IconHallOverseer } from '@components/icons';
+import { AssignmentCode } from '@definition/assignment';
 import { useAppTranslation, useBreakpoints } from '@hooks/index';
-import useAuditoriumAttendant from './useAuditoriumAttendant';
+import { useAtomValue } from 'jotai';
+import { selectedWeekState } from '@states/schedules';
 import DutyName from '../duty_name';
 import PersonSelector from '@features/meetings/person_selector';
-import { AssignmentCode } from '@definition/assignment';
 
-const AuditoriumAttendant = () => {
+type AuditoriumAttendantProps = {
+  dayType: 'midweek' | 'weekend';
+};
+
+const AuditoriumAttendant = ({ dayType }: AuditoriumAttendantProps) => {
   const { t } = useAppTranslation();
 
   const { laptopDown } = useBreakpoints();
 
-  const { week } = useAuditoriumAttendant();
+  const week = useAtomValue(selectedWeekState);
+
+  const assignmentWeekType = dayType === 'midweek' ? 'MW' : 'WE';
 
   return (
     <Stack
@@ -30,7 +37,15 @@ const AuditoriumAttendant = () => {
             <PersonSelector
               label={t('tr_brother')}
               week={week}
-              assignment="DUTIES_AuditoriumAttendant"
+              assignment={`${assignmentWeekType}_DUTIES_AuditoriumAttendant_Shift_1`}
+              type={AssignmentCode.DUTIES_AuditoriumAttendant}
+            />
+          </Grid>
+          <Grid size={{ mobile: 12, laptop: 6 }}>
+            <PersonSelector
+              label={t('tr_brother')}
+              week={week}
+              assignment={`${assignmentWeekType}_DUTIES_AuditoriumAttendant_Shift_2`}
               type={AssignmentCode.DUTIES_AuditoriumAttendant}
             />
           </Grid>

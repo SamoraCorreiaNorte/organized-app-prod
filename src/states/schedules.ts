@@ -46,6 +46,12 @@ export const S140DownloadOpenState = atom(false);
 
 export const selectedWeekState = atomWithReset('');
 
+export const selectedDayState = atomWithReset<{
+  date: string;
+  locale: string;
+  dayType: 'midweek' | 'weekend';
+}>({ date: '', locale: '', dayType: 'midweek' });
+
 export const assignmentsHistoryState = atom<AssignmentHistoryType[]>([]);
 
 export const weekendSongSelectorOpenState = atom(false);

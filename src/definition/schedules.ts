@@ -107,9 +107,14 @@ export type SchedWeekType = {
     week_type: WeekTypeCongregation[];
     duties_audio: AssignmentCongregation[];
     duties_video: AssignmentCongregation[];
+    duties_microphone_1: AssignmentCongregation[];
+    duties_microphone_2: AssignmentCongregation[];
     duties_stage: AssignmentCongregation[];
-    duties_auditorium_attendant: AssignmentCongregation[];
-    duties_entrance_attendant: AssignmentCongregation[];
+    duties_video_conference: AssignmentCongregation[];
+    duties_entrance_attendant_shift_1: AssignmentCongregation[];
+    duties_entrance_attendant_shift_2: AssignmentCongregation[];
+    duties_auditorium_attendant_shift_1: AssignmentCongregation[];
+    duties_auditorium_attendant_shift_2: AssignmentCongregation[];
   };
   weekend_meeting: {
     chairman: AssignmentCongregation[];
@@ -130,9 +135,14 @@ export type SchedWeekType = {
     outgoing_talks: OutgoingTalkScheduleType[];
     duties_audio: AssignmentCongregation[];
     duties_video: AssignmentCongregation[];
+    duties_microphone_1: AssignmentCongregation[];
+    duties_microphone_2: AssignmentCongregation[];
     duties_stage: AssignmentCongregation[];
-    duties_auditorium_attendant: AssignmentCongregation[];
-    duties_entrance_attendant: AssignmentCongregation[];
+    duties_video_conference: AssignmentCongregation[];
+    duties_entrance_attendant_shift_1: AssignmentCongregation[];
+    duties_entrance_attendant_shift_2: AssignmentCongregation[];
+    duties_auditorium_attendant_shift_1: AssignmentCongregation[];
+    duties_auditorium_attendant_shift_2: AssignmentCongregation[];
   };
 };
 

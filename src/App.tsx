@@ -61,6 +61,7 @@ const UserDetails = lazy(
   () => import('@pages/congregation/manage_access/user_details')
 );
 const WeeklySchedules = lazy(() => import('@pages/meetings/schedules'));
+const EditSchedules = lazy(() => import('@pages/meetings/edit_schedules'));
 const CongregationSettings = lazy(() => import('@pages/congregation/settings'));
 const Applications = lazy(() => import('@pages/persons/applications'));
 const ApplicationDetails = lazy(
@@ -119,6 +120,8 @@ const App = ({ updatePwa }: { updatePwa: VoidFunction }) => {
               path: '/activities/upcoming-events',
               element: <UpcomingEvents />,
             },
+            //CHANGE
+            { path: '/edit-schedules', element: <EditSchedules /> },
 
             // publisher routes
             {

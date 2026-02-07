@@ -709,7 +709,9 @@ export const importDummyPersons = async (showLoading?: boolean) => {
               AssignmentCode.DUTIES_EntranceAttendant,
               AssignmentCode.DUTIES_Microphone,
               AssignmentCode.DUTIES_Stage,
-              AssignmentCode.DUTIES_Video
+              AssignmentCode.DUTIES_Video,
+              AssignmentCode.DUTIES_VideoConference,
+              AssignmentCode.DUTIES_AuditoriumAttendant
             );
 
           person.person_data.assignments.at(0).updatedAt =

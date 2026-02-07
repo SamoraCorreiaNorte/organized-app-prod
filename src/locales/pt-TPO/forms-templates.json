@@ -110,5 +110,15 @@
   "tr_averageAttendanceMonthly": "Assistência média a cada mês",
   "tr_S88Title": "REGISTO DE ASSISTÊNCIA ÀS REUNIÕES CONGREGACIONAIS",
   "tr_findScheduleByScanningQRCode": "Encontra a versão mais atualizada desta escala, por capturar o código QR ou diretamenta na app Organized.",
-  "tr_fieldServiceMeetingSchedule": "Saídas ao serviço de campo"
+  "tr_fieldServiceMeetingSchedule": "Saídas ao serviço de campo",
+  "tr_soundDepartment": "Departamento de Som",
+  "tr_attendants": "Indicadores",
+  "tr_dutiesAudio": "Som",
+  "tr_dutiesVideo": "Imagem",
+  "tr_dutiesMicrophone": "Micro",
+  "tr_dutiesMicrophones": "Micros",
+  "tr_dutiesStage": "Palco",
+  "tr_dutiesVideoConference": "Video conferência",
+  "tr_dutiesEntranceAttendant": "Hall",
+  "tr_dutiesAuditoriumAttendant": "Auditório"
 }

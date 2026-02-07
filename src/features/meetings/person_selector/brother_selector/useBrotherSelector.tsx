@@ -533,7 +533,6 @@ const useBrotherSelector = ({ type, week, assignment }: PersonSelectorType) => {
 
   const handleSaveAssignment = async (value: PersonOptionsType) => {
     try {
-      console.log('Saving assignment...', { schedule, assignment, value });
       await schedulesSaveAssignment(schedule, assignment, value);
 
       if (assignment === 'WM_Speaker_Part1') {

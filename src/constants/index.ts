@@ -444,6 +444,34 @@ export const ASSIGNMENT_PATH = {
   WM_CircuitOverseer: 'weekend_meeting.circuit_overseer',
   WM_SubstituteSpeaker: 'weekend_meeting.speaker.substitute',
   WM_Speaker_Outgoing: 'weekend_meeting.outgoing_talks',
+  MW_DUTIES_Audio: 'midweek_meeting.duties_audio',
+  MW_DUTIES_Video: 'midweek_meeting.duties_video',
+  MW_DUTIES_Stage: 'midweek_meeting.duties_stage',
+  MW_DUTIES_Microphone_1: 'midweek_meeting.duties_microphone_1',
+  MW_DUTIES_Microphone_2: 'midweek_meeting.duties_microphone_2',
+  MW_DUTIES_VideoConference: 'midweek_meeting.duties_video_conference',
+  MW_DUTIES_EntranceAttendant_Shift_1:
+    'midweek_meeting.duties_entrance_attendant_shift_1',
+  MW_DUTIES_EntranceAttendant_Shift_2:
+    'midweek_meeting.duties_entrance_attendant_shift_2',
+  MW_DUTIES_AuditoriumAttendant_Shift_1:
+    'midweek_meeting.duties_auditorium_attendant_shift_1',
+  MW_DUTIES_AuditoriumAttendant_Shift_2:
+    'midweek_meeting.duties_auditorium_attendant_shift_2',
+  WE_DUTIES_Audio: 'weekend_meeting.duties_audio',
+  WE_DUTIES_Video: 'weekend_meeting.duties_video',
+  WE_DUTIES_Stage: 'weekend_meeting.duties_stage',
+  WE_DUTIES_Microphone_1: 'weekend_meeting.duties_microphone_1',
+  WE_DUTIES_Microphone_2: 'weekend_meeting.duties_microphone_2',
+  WE_DUTIES_VideoConference: 'weekend_meeting.duties_video_conference',
+  WE_DUTIES_EntranceAttendant_Shift_1:
+    'weekend_meeting.duties_entrance_attendant_shift_1',
+  WE_DUTIES_EntranceAttendant_Shift_2:
+    'weekend_meeting.duties_entrance_attendant_shift_2',
+  WE_DUTIES_AuditoriumAttendant_Shift_1:
+    'weekend_meeting.duties_auditorium_attendant_shift_1',
+  WE_DUTIES_AuditoriumAttendant_Shift_2:
+    'weekend_meeting.duties_auditorium_attendant_shift_2',
 };
 
 export const BROTHER_ASSIGNMENT = [
@@ -467,6 +495,7 @@ export const BROTHER_ASSIGNMENT = [
   AssignmentCode.DUTIES_Microphone,
   AssignmentCode.DUTIES_Stage,
   AssignmentCode.DUTIES_Video,
+  AssignmentCode.DUTIES_VideoConference,
 ];
 
 export const STUDENT_ASSIGNMENT = [

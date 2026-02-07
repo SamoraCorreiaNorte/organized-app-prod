@@ -2,16 +2,23 @@ import { Grid, Stack } from '@mui/material';
 import { IconTalk } from '@components/icons';
 import { AssignmentCode } from '@definition/assignment';
 import { useAppTranslation, useBreakpoints } from '@hooks/index';
-import useStage from './useStage';
+import { useAtomValue } from 'jotai';
+import { selectedWeekState } from '@states/schedules';
 import DutyName from '../duty_name';
 import PersonSelector from '@features/meetings/person_selector';
 
-const Stage = () => {
+type StageProps = {
+  dayType: 'midweek' | 'weekend';
+};
+
+const Stage = ({ dayType }: StageProps) => {
   const { t } = useAppTranslation();
 
   const { laptopDown } = useBreakpoints();
 
-  const { week } = useStage();
+  const week = useAtomValue(selectedWeekState);
+
+  const assignmentWeekType = dayType === 'midweek' ? 'MW' : 'WE';
 
   return (
     <Stack
@@ -30,7 +37,7 @@ const Stage = () => {
             <PersonSelector
               label={t('tr_brother')}
               week={week}
-              assignment="DUTIES_Stage"
+              assignment={`${assignmentWeekType}_DUTIES_Stage`}
               type={AssignmentCode.DUTIES_Stage}
             />
           </Grid>

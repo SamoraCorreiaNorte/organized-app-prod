@@ -171,11 +171,22 @@ export const scheduleSchema: SchedWeekType = {
     week_type: [{ type: 'main', value: Week.NORMAL, updatedAt: '' }],
     duties_audio: [{ type: 'main', value: '', name: '', updatedAt: '' }],
     duties_video: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_microphone_1: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_microphone_2: [{ type: 'main', value: '', name: '', updatedAt: '' }],
     duties_stage: [{ type: 'main', value: '', name: '', updatedAt: '' }],
-    duties_auditorium_attendant: [
+    duties_video_conference: [
       { type: 'main', value: '', name: '', updatedAt: '' },
     ],
-    duties_entrance_attendant: [
+    duties_entrance_attendant_shift_1: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_entrance_attendant_shift_2: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_auditorium_attendant_shift_1: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_auditorium_attendant_shift_2: [
       { type: 'main', value: '', name: '', updatedAt: '' },
     ],
   },
@@ -206,11 +217,22 @@ export const scheduleSchema: SchedWeekType = {
     outgoing_talks: [],
     duties_audio: [{ type: 'main', value: '', name: '', updatedAt: '' }],
     duties_video: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_microphone_1: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_microphone_2: [{ type: 'main', value: '', name: '', updatedAt: '' }],
     duties_stage: [{ type: 'main', value: '', name: '', updatedAt: '' }],
-    duties_auditorium_attendant: [
+    duties_video_conference: [
       { type: 'main', value: '', name: '', updatedAt: '' },
     ],
-    duties_entrance_attendant: [
+    duties_entrance_attendant_shift_1: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_entrance_attendant_shift_2: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_auditorium_attendant_shift_1: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_auditorium_attendant_shift_2: [
       { type: 'main', value: '', name: '', updatedAt: '' },
     ],
   },

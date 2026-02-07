@@ -157,6 +157,10 @@ const useAssignments = () => {
             name: t('tr_dutiesStage'),
           },
           {
+            code: AssignmentCode.DUTIES_VideoConference,
+            name: t('tr_dutiesVideoConference'),
+          },
+          {
             code: AssignmentCode.DUTIES_EntranceAttendant,
             name: t('tr_dutiesEntranceAttendant'),
           },

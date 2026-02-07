@@ -69,7 +69,7 @@ const WeekendMeeting = () => {
         />
       )}
 
-      <PageTitle
+      {/* <PageTitle
         title={t('tr_weekendMeeting')}
         quickAction={handleOpenQuickSettings}
         buttons={
@@ -101,7 +101,7 @@ const WeekendMeeting = () => {
             </>
           )
         }
-      />
+      /> */}
 
       <Box
         sx={{

@@ -6,12 +6,18 @@ import useAudioVideo from './useAudioVideo';
 import DutyName from '../duty_name';
 import PersonSelector from '@features/meetings/person_selector';
 
-const AudioVideo = () => {
+type AudioVideoProps = {
+  dayType: 'midweek' | 'weekend';
+};
+
+const AudioVideo = ({ dayType }: AudioVideoProps) => {
   const { t } = useAppTranslation();
 
   const { laptopDown } = useBreakpoints();
 
   const { week } = useAudioVideo();
+
+  const assignmentWeekType = dayType === 'midweek' ? 'MW' : 'WE';
 
   return (
     <Stack
@@ -30,7 +36,7 @@ const AudioVideo = () => {
             <PersonSelector
               label={t('tr_brother')}
               week={week}
-              assignment="DUTIES_Audio"
+              assignment={`${assignmentWeekType}_DUTIES_Audio`}
               type={AssignmentCode.DUTIES_Audio}
             />
           </Grid>
@@ -38,7 +44,7 @@ const AudioVideo = () => {
             <PersonSelector
               label={t('tr_brother')}
               week={week}
-              assignment="DUTIES_Video"
+              assignment={`${assignmentWeekType}_DUTIES_Video`}
               type={AssignmentCode.DUTIES_Video}
             />
           </Grid>

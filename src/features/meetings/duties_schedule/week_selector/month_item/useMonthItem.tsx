@@ -1,10 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router';
 import { useAtom, useAtomValue } from 'jotai';
-import { MeetingType } from '@definition/app';
 import { monthNamesState } from '@states/app';
 import { schedulesWeekAssignmentsInfo } from '@services/app/schedules';
-import { schedulesState, selectedWeekState } from '@states/schedules';
+import { schedulesState, selectedDayState } from '@states/schedules';
 import {
   meetingExactDateState,
   midweekMeetingWeekdayState,
@@ -18,10 +16,9 @@ const useMonthItem = ({
   weeks,
   currentExpanded,
   onChangeCurrentExpanded,
+  meetingType,
 }: MonthItemType) => {
-  const location = useLocation();
-
-  const [selectedWeek, setSelectedWeek] = useAtom(selectedWeekState);
+  const [selectedWeek, setSelectedWeek] = useAtom(selectedDayState);
 
   const monthNames = useAtomValue(monthNamesState);
   const schedules = useAtomValue(schedulesState);
@@ -31,12 +28,6 @@ const useMonthItem = ({
 
   const [total, setTotal] = useState(0);
   const [assigned, setAssigned] = useState(0);
-
-  const meeting: MeetingType = useMemo(() => {
-    if (location.pathname === '/meeting-duties') return 'duties';
-
-    return location.pathname === '/midweek-meeting' ? 'midweek' : 'weekend';
-  }, [location.pathname]);
 
   const expanded = useMemo(() => {
     return currentExpanded === month.toString();
@@ -51,21 +42,25 @@ const useMonthItem = ({
   }, [total, assigned]);
 
   const meeting_month = useMemo(() => {
-    if (!selectedWeek) return;
+    if (!selectedWeek.date) return;
 
     let toAdd = 0;
 
-    if (meeting === 'midweek') {
+    if (meetingType === 'midweek') {
       toAdd = meetingExactDate ? midweekDay - 1 : 0;
     }
 
-    if (meeting === 'weekend') {
+    if (meetingType === 'weekend') {
       toAdd = weekendDay - 1;
     }
 
-    const meetingDate = addDays(selectedWeek, toAdd);
+    if (meetingType === 'duties') {
+      toAdd = midweekDay - 1;
+    }
+
+    const meetingDate = addDays(selectedWeek.date, toAdd);
     return meetingDate.getMonth().toString();
-  }, [selectedWeek, meeting, midweekDay, weekendDay, meetingExactDate]);
+  }, [selectedWeek, meetingType, midweekDay, weekendDay, meetingExactDate]);
 
   const counts = useMemo(() => {
     let total = 0;
@@ -78,28 +73,27 @@ const useMonthItem = ({
         continue;
       }
 
-      const data = schedulesWeekAssignmentsInfo(schedule.weekOf, meeting);
+      const data = schedulesWeekAssignmentsInfo(schedule.weekOf, meetingType);
 
       total += data.total;
       assigned += data.assigned;
     }
 
     return { total, assigned };
-  }, [weeks, schedules, meeting]);
+  }, [weeks, schedules, meetingType]);
 
   const handleToggleExpand = () => {
     if (currentExpanded === month.toString()) {
-      setSelectedWeek('');
+      setSelectedWeek({ date: '', locale: '', dayType: 'midweek' });
       onChangeCurrentExpanded('');
     } else {
-      setSelectedWeek('');
+      setSelectedWeek({ date: '', locale: '', dayType: 'midweek' });
       onChangeCurrentExpanded(month.toString());
     }
   };
 
   useEffect(() => {
     if (!meeting_month) return;
-
     if (meeting_month !== currentExpanded) {
       onChangeCurrentExpanded(meeting_month);
     }

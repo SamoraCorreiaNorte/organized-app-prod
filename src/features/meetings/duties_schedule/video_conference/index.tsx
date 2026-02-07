@@ -1,17 +1,17 @@
 import { Grid, Stack } from '@mui/material';
-import { IconMicrophone } from '@components/icons';
-import { useAppTranslation, useBreakpoints } from '@hooks/index';
+import { IconConference } from '@components/icons';
 import { AssignmentCode } from '@definition/assignment';
+import { useAppTranslation, useBreakpoints } from '@hooks/index';
 import { useAtomValue } from 'jotai';
 import { selectedWeekState } from '@states/schedules';
 import DutyName from '../duty_name';
 import PersonSelector from '@features/meetings/person_selector';
 
-type MicrophonesProps = {
+type VideoConferenceProps = {
   dayType: 'midweek' | 'weekend';
 };
 
-const Microphones = ({ dayType }: MicrophonesProps) => {
+const VideoConference = ({ dayType }: VideoConferenceProps) => {
   const { t } = useAppTranslation();
 
   const { laptopDown } = useBreakpoints();
@@ -27,8 +27,8 @@ const Microphones = ({ dayType }: MicrophonesProps) => {
       alignItems="flex-start"
     >
       <DutyName
-        duty={t('tr_dutiesMicrophones')}
-        icon={<IconMicrophone color="var(--accent-dark)" />}
+        duty={t('tr_dutiesVideoConference')}
+        icon={<IconConference color="var(--accent-dark)" />}
       />
 
       <Stack spacing="8px" flex={1} width="100%">
@@ -37,16 +37,8 @@ const Microphones = ({ dayType }: MicrophonesProps) => {
             <PersonSelector
               label={t('tr_brother')}
               week={week}
-              assignment={`${assignmentWeekType}_DUTIES_Microphone_1`}
-              type={AssignmentCode.DUTIES_Microphone}
-            />
-          </Grid>
-          <Grid size={{ mobile: 12, laptop: 6 }}>
-            <PersonSelector
-              label={t('tr_brother')}
-              week={week}
-              assignment={`${assignmentWeekType}_DUTIES_Microphone_2`}
-              type={AssignmentCode.DUTIES_Microphone}
+              assignment={`${assignmentWeekType}_DUTIES_VideoConference`}
+              type={AssignmentCode.DUTIES_VideoConference}
             />
           </Grid>
         </Grid>
@@ -55,4 +47,4 @@ const Microphones = ({ dayType }: MicrophonesProps) => {
   );
 };
 
-export default Microphones;
+export default VideoConference;
