@@ -4,7 +4,11 @@ import MidweekEditor from '@features/meetings/midweek_editor';
 import MonthlyView from '@features/meetings/monthly_view';
 import WeekSelector from '@features/meetings/week_selector';
 
-const MidweekMeeting = ({ openWeekView }: { openWeekView: boolean }) => {
+const MidweekMeetingSchedule = ({
+  openWeekView,
+}: {
+  openWeekView: boolean;
+}) => {
   const { desktopUp } = useBreakpoints();
 
   return (
@@ -24,7 +28,7 @@ const MidweekMeeting = ({ openWeekView }: { openWeekView: boolean }) => {
             alignItems: desktopUp ? 'flex-start' : 'unset',
           }}
         >
-          <WeekSelector />
+          <WeekSelector meetingType="midweek" />
           <MidweekEditor />
         </Box>
       ) : (
@@ -34,4 +38,4 @@ const MidweekMeeting = ({ openWeekView }: { openWeekView: boolean }) => {
   );
 };
 
-export default MidweekMeeting;
+export default MidweekMeetingSchedule;

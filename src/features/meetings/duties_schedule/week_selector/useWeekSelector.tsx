@@ -13,7 +13,6 @@ import {
 } from '@states/settings';
 import MonthsContainer from './months_container';
 import { addDays } from '@utils/date';
-import { add } from 'date-fns';
 
 const useWeekSelector = (meetingType: MeetingType) => {
   const { desktopUp } = useBreakpoints();

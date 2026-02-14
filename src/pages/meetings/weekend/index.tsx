@@ -4,7 +4,7 @@ import OutgoingTalks from '@features/meetings/outgoing_talks';
 import WeekendEditor from '@features/meetings/weekend_editor';
 import WeekSelector from '@features/meetings/week_selector';
 
-const WeekendMeeting = () => {
+const WeekendMeetingSchedule = () => {
   const { desktopUp } = useBreakpoints();
 
   return (
@@ -23,7 +23,7 @@ const WeekendMeeting = () => {
           alignItems: desktopUp ? 'flex-start' : 'unset',
         }}
       >
-        <WeekSelector />
+        <WeekSelector meetingType="weekend" />
 
         <Box
           sx={{
@@ -41,4 +41,4 @@ const WeekendMeeting = () => {
   );
 };
 
-export default WeekendMeeting;
+export default WeekendMeetingSchedule;

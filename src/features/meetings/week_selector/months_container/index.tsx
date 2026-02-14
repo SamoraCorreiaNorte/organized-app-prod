@@ -3,7 +3,11 @@ import { MonthsContainerType } from './index.types';
 import MonthItem from '../month_item';
 import useMonthsContainer from './useMonthsContainer';
 
-const MonthsContainer = ({ months, reverse = false }: MonthsContainerType) => {
+const MonthsContainer = ({
+  months,
+  reverse = false,
+  meetingType,
+}: MonthsContainerType) => {
   const displayedMonths = reverse ? [...months].reverse() : months;
 
   const { currentExpanded, handleSetExpanded } = useMonthsContainer();
@@ -26,6 +30,7 @@ const MonthsContainer = ({ months, reverse = false }: MonthsContainerType) => {
           weeks={month.weeks}
           currentExpanded={currentExpanded}
           onChangeCurrentExpanded={handleSetExpanded}
+          meetingType={meetingType}
         />
       ))}
     </Box>

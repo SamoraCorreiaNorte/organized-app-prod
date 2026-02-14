@@ -26,6 +26,7 @@ const DutiesEditor = () => {
         flexGrow: 1,
       }}
     >
+      {' '}
       {weekDateLocale?.length === 0 && (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <IconInfo color="var(--accent-400)" />
@@ -34,49 +35,15 @@ const DutiesEditor = () => {
           </Typography>
         </Box>
       )}
-
       {weekDateLocale?.length > 0 && (
         <Stack spacing="16px">
-          {/* week navigation */}
-          {/* <Stack
-            direction="row"
-            spacing="16px"
-            justifyContent={tablet500Down && 'space-between'}
-          >
-            <IconButton
-              disabled={!showWeekNav.back}
-              onClick={handleChangeWeekBack}
-              sx={{ padding: '2px' }}
-            >
-              <IconNavigateLeft
-                color={showWeekNav.back ? 'var(--black)' : 'var(--grey-300)'}
-              />
-            </IconButton>
-
-            <Typography
-              className="h2"
-              sx={{
-                minWidth: !tablet500Down && '140px',
-                textAlign: 'center',
-              }}
-            >
-              {weekDateLocale}
-            </Typography>
-
-            <IconButton
-              disabled={!showWeekNav.next}
-              onClick={handleChangeWeekNext}
-              sx={{ padding: '2px' }}
-            >
-              <IconNavigateRight
-                color={showWeekNav.next ? 'var(--black)' : 'var(--grey-300)'}
-              />
-            </IconButton>
-          </Stack>
-
-          <Divider color="var(--accent-200)" /> */}
-
           {/* audio video duties */}
+
+          <Typography className="h2" sx={{ flex: 1 }}>
+            {`${weekDateLocale} - ${dayType === 'weekend' ? t('tr_weekend') : t('tr_midweek')}`}
+          </Typography>
+
+          <Divider color="var(--accent-200)" />
 
           <Stack spacing="20px">
             <Typography className="h4">{t('tr_dutiesAudio')}</Typography>

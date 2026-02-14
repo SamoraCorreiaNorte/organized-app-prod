@@ -19,9 +19,9 @@ import {
 import useMidweek from '../midweek/useMidweek';
 import useWeekend from '../weekend/useWeekend';
 import useDuties from '../duties/useDuties';
-import MidweekMeeting from '../midweek';
-import WeekendMeeting from '../weekend';
-import MeetingDuties from '../duties';
+import MidweekMeetingSchedule from '../midweek';
+import WeekendMeetingSchedule from '../weekend';
+import MeetingDutiesSchedule from '../duties';
 
 const LOCALSTORAGE_KEY = 'organized_edit_schedules';
 
@@ -77,7 +77,7 @@ const useEditSchedules = () => {
       } = midweekState;
 
       return {
-        title: t('tr_midweekMeeting'),
+        title: t('tr_midweekMeetingScheduling'),
         quickAction: handleOpenQuickSettings,
         buttons: hasWeeks && (
           <>
@@ -141,7 +141,7 @@ const useEditSchedules = () => {
       } = weekendState;
 
       return {
-        title: t('tr_weekendMeeting'),
+        title: t('tr_weekendMeetingScheduling'),
         quickAction: handleOpenQuickSettings,
         buttons: hasWeeks && (
           <>
@@ -177,7 +177,7 @@ const useEditSchedules = () => {
       const { handleOpenQuickSettings } = dutiesState;
 
       return {
-        title: t('tr_meetingDutiesSchedules'),
+        title: t('tr_meetingDutiesScheduling'),
         quickAction: handleOpenQuickSettings,
       };
     }
@@ -187,20 +187,20 @@ const useEditSchedules = () => {
     const result = [
       {
         label: t('tr_midweekMeeting'),
-        Component: <MidweekMeeting {...midweekState} />,
+        Component: <MidweekMeetingSchedule {...midweekState} />,
       },
       {
         label: t('tr_weekendMeeting'),
-        Component: <WeekendMeeting {...weekendState} />,
+        Component: <WeekendMeetingSchedule />,
       },
       {
         label: t('tr_departments'),
-        Component: <MeetingDuties {...dutiesState} />,
+        Component: <MeetingDutiesSchedule />,
       },
     ];
 
     return result;
-  }, [t, midweekState, weekendState, dutiesState]);
+  }, [t, midweekState]);
 
   const handleScheduleChange = (value: number) => {
     let type: EditSchedulesType;

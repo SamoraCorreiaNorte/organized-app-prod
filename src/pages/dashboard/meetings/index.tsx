@@ -41,28 +41,12 @@ const MeetingsCard = ({ assignmentCount }: MeetingsCardProps) => {
         />
       </ListItem>
 
-      <ListItem disablePadding>
-        <DashboardMenu
-          icon={<IconCalendarWeek color="var(--black)" />}
-          primaryText={t('tr_viewAssignmentsSchedule')}
-          path="/weekly-schedules"
-        />
-      </ListItem>
-
-      <ListItem disablePadding>
-        <DashboardMenu
-          icon={<IconCalendarWeek color="var(--black)" />}
-          primaryText={t('tr_editSchedules')}
-          path="/edit-schedules"
-        />
-      </ListItem>
-
       {showDuties && isDutiesEditor && (
         <ListItem disablePadding>
           <DashboardMenu
-            icon={<IconDuties color="var(--black)" />}
-            primaryText={t('tr_meetingDutiesSchedules')}
-            path="/meeting-duties"
+            icon={<IconCalendarWeek color="var(--black)" />}
+            primaryText={t('tr_editSchedules')}
+            path="/edit-schedules"
           />
         </ListItem>
       )}
@@ -72,7 +56,7 @@ const MeetingsCard = ({ assignmentCount }: MeetingsCardProps) => {
           <DashboardMenu
             icon={<IconDiamond color="var(--black)" />}
             primaryText={t('tr_midweekMeeting')}
-            path="/midweek-meeting"
+            path="/midweek-meetings"
           />
         </ListItem>
       )}
@@ -82,7 +66,7 @@ const MeetingsCard = ({ assignmentCount }: MeetingsCardProps) => {
           <DashboardMenu
             icon={<IconTalk color="var(--black)" />}
             primaryText={t('tr_weekendMeeting')}
-            path="/weekend-meeting"
+            path="/weekend-meetings"
           />
         </ListItem>
       )}

@@ -3,7 +3,7 @@ import { useBreakpoints } from '@hooks/index';
 import DutiesEditor from '@features/meetings/duties_schedule/duties_editor';
 import WeekSelector from '@features/meetings/duties_schedule/week_selector';
 
-const MeetingDuties = () => {
+const MeetingDutiesSchedule = () => {
   const { desktopUp } = useBreakpoints();
 
   return (
@@ -23,4 +23,4 @@ const MeetingDuties = () => {
   );
 };
 
-export default MeetingDuties;
+export default MeetingDutiesSchedule;
