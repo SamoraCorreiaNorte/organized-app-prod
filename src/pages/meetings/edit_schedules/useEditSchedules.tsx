@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { useAtomValue } from 'jotai';
 import {
   useAppTranslation,
   useCurrentUser,
@@ -7,7 +6,6 @@ import {
 } from '@hooks/index';
 import { localStorageGetItem } from '@utils/common';
 import { EditSchedulesType } from './index.types';
-import { settingsState, userDataViewState } from '@states/settings';
 import Button from '@components/button';
 import {
   IconGenerate,
@@ -43,20 +41,7 @@ const useEditSchedules = () => {
     return 0;
   });
 
-  const { isAppointed } = useCurrentUser();
-
-  const settings = useAtomValue(settingsState);
-  const dataView = useAtomValue(userDataViewState);
-
-  const outgoingVisible = useMemo(() => {
-    if (isAppointed) return true;
-
-    const weekend = settings.cong_settings.weekend_meeting.find(
-      (record) => record.type === dataView
-    );
-
-    return weekend.outgoing_talks_schedule_public.value;
-  }, [isAppointed, settings, dataView]);
+  const { isMidweekEditor, isWeekendEditor, isDutiesEditor } = useCurrentUser();
 
   const midweekState = useMidweek();
   const weekendState = useWeekend();
@@ -135,7 +120,6 @@ const useEditSchedules = () => {
         handleOpenExport,
         handleOpenAutofill,
         isConnected,
-        handleOpenPublish,
         handleOpenQuickSettings,
         handleOpenPublish: handleOpenPublishWeekend,
       } = weekendState;
@@ -184,23 +168,32 @@ const useEditSchedules = () => {
   }, [value, midweekState, weekendState, dutiesState, desktopUp, t]);
 
   const tabs = useMemo(() => {
-    const result = [
-      {
+    const result = [];
+
+    if (isMidweekEditor) {
+      result.push({
         label: t('tr_midweekMeeting'),
-        Component: <MidweekMeetingSchedule {...midweekState} />,
-      },
-      {
+        Component: (
+          <MidweekMeetingSchedule openWeekView={midweekState.openWeekView} />
+        ),
+      });
+    }
+
+    if (isWeekendEditor) {
+      result.push({
         label: t('tr_weekendMeeting'),
         Component: <WeekendMeetingSchedule />,
-      },
-      {
+      });
+    }
+    if (isDutiesEditor) {
+      result.push({
         label: t('tr_departments'),
         Component: <MeetingDutiesSchedule />,
-      },
-    ];
+      });
+    }
 
     return result;
-  }, [t, midweekState]);
+  }, [t, midweekState, isMidweekEditor, isWeekendEditor, isDutiesEditor]);
 
   const handleScheduleChange = (value: number) => {
     let type: EditSchedulesType;

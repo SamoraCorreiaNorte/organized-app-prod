@@ -9,7 +9,7 @@ import { schedulesGetData } from '@services/app/schedules';
 import { AssignmentCongregation } from '@definition/schedules';
 import { monthShortNamesState } from '@states/app';
 
-const useWeekendContainer = () => {
+const useDutiesContainer = () => {
   const currentWeekVisible = useIntersectionObserver({
     root: '.schedules-view-week-selector .MuiTabs-scroller',
     selector: '.schedules-current-week',
@@ -18,25 +18,15 @@ const useWeekendContainer = () => {
   const { t } = useAppTranslation();
 
   const schedules = useAtomValue(schedulesState);
-  console.log('schedules', schedules);
   const dataView = useAtomValue(userDataViewState);
-  const monthShortNames = useAtomValue(monthShortNamesState);
+  const monthNames = useAtomValue(monthShortNamesState);
 
   const [value, setValue] = useState<number | boolean>(false);
 
   const noSchedule = useMemo(() => {
     if (schedules.length === 0) return true;
 
-    let noMeeting = true;
-
-    for (const schedule of schedules) {
-      if (schedule.weekend_meeting) {
-        noMeeting = false;
-        break;
-      }
-    }
-
-    return noMeeting;
+    return !schedules.some((schedule) => !!schedule.midweek_meeting);
   }, [schedules]);
 
   const filteredSchedules = useMemo(() => {
@@ -59,20 +49,19 @@ const useWeekendContainer = () => {
     if (!schedule || noSchedule) return;
 
     const assignments = Object.entries(ASSIGNMENT_PATH);
-    const weekendAssignments = assignments.filter(
-      (record) =>
-        record[0].includes('WM_') && record[0] !== 'WM_CircuitOverseer'
+    const midweekDutiesAssignments = assignments.filter((record) =>
+      record[0].startsWith('MW_DUTIES_')
     );
 
     const dates: string[] = [];
-    for (const [, path] of weekendAssignments) {
+    for (const [, path] of midweekDutiesAssignments) {
       const assigned = schedulesGetData(
         schedule,
         path,
         dataView
       ) as AssignmentCongregation;
 
-      if (assigned?.updatedAt.length > 0) {
+      if (assigned?.updatedAt?.length > 0) {
         dates.push(assigned.updatedAt);
       }
     }
@@ -84,7 +73,7 @@ const useWeekendContainer = () => {
     const year = d.getFullYear();
     const month = d.getMonth();
     const date = d.getDate();
-    const monthName = monthShortNames[month];
+    const monthName = monthNames[month];
 
     const dateFormatted = t('tr_longDateWithYearLocale', {
       year,
@@ -93,7 +82,7 @@ const useWeekendContainer = () => {
     });
 
     return dateFormatted;
-  }, [schedule, dataView, monthShortNames, t, noSchedule]);
+  }, [schedule, dataView, monthNames, t, noSchedule]);
 
   const handleGoCurrent = () => {
     const now = getWeekDate();
@@ -111,9 +100,9 @@ const useWeekendContainer = () => {
   };
 
   return {
-    value,
     handleGoCurrent,
     handleValueChange,
+    value,
     week,
     currentWeekVisible,
     scheduleLastUpdated,
@@ -122,4 +111,4 @@ const useWeekendContainer = () => {
   };
 };
 
-export default useWeekendContainer;
+export default useDutiesContainer;

@@ -25,12 +25,6 @@ import PrivacyPolicyPage from '@pages/privacy';
 
 // lazy loading
 const Dashboard = lazy(() => import('@pages/dashboard'));
-const MidweekContainer = lazy(
-  () => import('@features/meetings/weekly_schedules/midweek_container')
-);
-const WeekendContainer = lazy(
-  () => import('@features/meetings/weekly_schedules/weekend_container')
-);
 const MyProfile = lazy(() => import('@pages/my_profile'));
 const PersonsAll = lazy(() => import('@pages/persons/all_persons'));
 const PersonDetails = lazy(() => import('@pages/persons/person_details'));
@@ -127,8 +121,6 @@ const App = ({ updatePwa }: { updatePwa: VoidFunction }) => {
               path: '/activities/upcoming-events',
               element: <UpcomingEvents />,
             },
-            //CHANGE
-            { path: '/edit-schedules', element: <EditSchedules /> },
 
             // publisher routes
             {
@@ -234,6 +226,21 @@ const App = ({ updatePwa }: { updatePwa: VoidFunction }) => {
                   path: '/reports/meeting-attendance',
                   element: <MeetingAttendance />,
                 },
+              ],
+            },
+            {
+              element: (
+                <RouteProtected
+                  allowed={
+                    isMidweekEditor ||
+                    isWeekendEditor ||
+                    isPublicTalkCoordinator ||
+                    isDutiesEditor
+                  }
+                />
+              ),
+              children: [
+                { path: '/edit-schedules', element: <EditSchedules /> },
               ],
             },
 

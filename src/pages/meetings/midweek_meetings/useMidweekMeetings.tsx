@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useAppTranslation } from '@hooks/index';
 import { localStorageGetItem } from '@utils/common';
 import MidweekContainer from '@features/meetings/weekly_schedules/midweek_container';
-import MeetingDutiesSchedule from '../duties';
+import DutiesContainer from './duties_container';
 
 type MidweekMeetingsTabType = 'meeting' | 'departments';
 
@@ -32,7 +32,7 @@ const useMidweekMeetings = () => {
       },
       {
         label: t('tr_departments'),
-        Component: <MeetingDutiesSchedule />,
+        Component: <DutiesContainer />,
       },
     ],
     [t]

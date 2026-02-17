@@ -1,5 +1,4 @@
 import { MouseEvent, useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router';
 import { useAtomValue } from 'jotai';
 import { IconError } from '@components/icons';
 import { PersonOptionsType, PersonSelectorType } from '../index.types';
@@ -36,9 +35,12 @@ import { getMessageByCode } from '@services/i18n/translation';
 import { formatDate } from '@utils/date';
 import { personIsAway } from '@services/app/persons';
 
-const useStudentSelector = ({ type, assignment, week }: PersonSelectorType) => {
-  const location = useLocation();
-
+const useStudentSelector = ({
+  type,
+  assignment,
+  week,
+  meetingType,
+}: PersonSelectorType) => {
   const { t } = useAppTranslation();
 
   const persons = useAtomValue(personsByViewState);
@@ -346,14 +348,10 @@ const useStudentSelector = ({ type, assignment, week }: PersonSelectorType) => {
   }, [value, assignmentsHistory]);
 
   const meetingDate = useMemo(() => {
-    const meeting = location.pathname.includes('midweek')
-      ? 'midweek'
-      : 'weekend';
-
-    const date = schedulesGetMeetingDate({ week, meeting });
+    const date = schedulesGetMeetingDate({ week, meeting: meetingType });
 
     return date.date;
-  }, [location.pathname, week]);
+  }, [week, meetingType]);
 
   const helperText = useMemo(() => {
     if (!value || week.length === 0) return '';
