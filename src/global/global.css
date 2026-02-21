@@ -119,6 +119,8 @@
   --accent-200: rgba(var(--accent-200-base), 1);
   --accent-150-base: 242, 245, 255;
   --accent-150: rgba(var(--accent-150-base), 1);
+  --accent-125-base: 225, 228, 240;
+  --accent-125: rgba(var(--accent-125-base), 1);
   --accent-100-base: 248, 249, 255;
   --accent-100: rgba(var(--accent-100-base), 1);
   --black-base: 34, 34, 34;
@@ -183,6 +185,8 @@
   --accent-200: rgba(var(--accent-200-base), 1);
   --accent-150-base: 42, 45, 53;
   --accent-150: rgba(var(--accent-150-base), 1);
+  --accent-125-base: 42, 45, 53;
+  --accent-125: rgba(var(--accent-125-base), 1);
   --accent-100-base: 21, 21, 25;
   --accent-100: rgba(var(--accent-100-base), 1);
   --black-base: 244, 244, 244;
@@ -247,6 +251,8 @@
   --accent-200: rgba(var(--accent-200-base), 1);
   --accent-150-base: 238, 249, 238;
   --accent-150: rgba(var(--accent-150-base), 1);
+  --accent-125-base: 220, 231, 220;
+  --accent-125: rgba(var(--accent-125-base), 1);
   --accent-100-base: 243, 250, 243;
   --accent-100: rgba(var(--accent-100-base), 1);
   --black-base: 34, 34, 34;
@@ -311,6 +317,8 @@
   --accent-200: rgba(var(--accent-200-base), 1);
   --accent-150-base: 40, 48, 40;
   --accent-150: rgba(var(--accent-150-base), 1);
+  --accent-125-base: 40, 48, 40;
+  --accent-125: rgba(var(--accent-125-base), 1);
   --accent-100-base: 19, 20, 19;
   --accent-100: rgba(var(--accent-100-base), 1);
   --black-base: 244, 244, 244;
@@ -375,6 +383,8 @@
   --accent-200: rgba(var(--accent-200-base), 1);
   --accent-150-base: 47, 43, 53;
   --accent-150: rgba(var(--accent-150-base), 1);
+  --accent-125-base: 47, 43, 53;
+  --accent-125: rgba(var(--accent-125-base), 1);
   --accent-100-base: 20, 18, 22;
   --accent-100: rgba(var(--accent-100-base), 1);
   --black-base: 244, 244, 244;
@@ -439,6 +449,8 @@
   --accent-200: rgba(var(--accent-200-base), 1);
   --accent-150-base: 242, 239, 253;
   --accent-150: rgba(var(--accent-150-base), 1);
+  --accent-125-base: 220, 217, 235;
+  --accent-125: rgba(var(--accent-125-base), 1);
   --accent-100-base: 248, 246, 255;
   --accent-100: rgba(var(--accent-100-base), 1);
   --black-base: 34, 34, 34;
@@ -503,6 +515,8 @@
   --accent-200: rgba(var(--accent-200-base), 1);
   --accent-150-base: 55, 49, 44;
   --accent-150: rgba(var(--accent-150-base), 1);
+  --accent-125-base: 55, 49, 44;
+  --accent-125: rgba(var(--accent-125-base), 1);
   --accent-100-base: 22, 20, 18;
   --accent-100: rgba(var(--accent-100-base), 1);
   --black-base: 244, 244, 244;
@@ -567,6 +581,8 @@
   --accent-200: rgba(var(--accent-200-base), 1);
   --accent-150-base: 250, 244, 232;
   --accent-150: rgba(var(--accent-150-base), 1);
+  --accent-125-base: 230, 224, 212;
+  --accent-125: rgba(var(--accent-125-base), 1);
   --accent-100-base: 254, 251, 245;
   --accent-100: rgba(var(--accent-100-base), 1);
   --black-base: 34, 34, 34;

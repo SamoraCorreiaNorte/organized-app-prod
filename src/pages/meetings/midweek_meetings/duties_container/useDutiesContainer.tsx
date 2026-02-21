@@ -1,13 +1,20 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useAtomValue } from 'jotai';
 import { useAppTranslation, useIntersectionObserver } from '@hooks/index';
 import { schedulesState } from '@states/schedules';
 import { addMonths, formatDate, getWeekDate } from '@utils/date';
-import { userDataViewState } from '@states/settings';
+import {
+  displayNameMeetingsEnableState,
+  fullnameOptionState,
+  userDataViewState,
+} from '@states/settings';
 import { ASSIGNMENT_PATH } from '@constants/index';
 import { schedulesGetData } from '@services/app/schedules';
 import { AssignmentCongregation } from '@definition/schedules';
 import { monthShortNamesState } from '@states/app';
+import { personsState } from '@states/persons';
+import { AssignmentFieldType } from '@definition/assignment';
+import { personGetDisplayName } from '@utils/common';
 
 const useDutiesContainer = () => {
   const currentWeekVisible = useIntersectionObserver({
@@ -18,8 +25,11 @@ const useDutiesContainer = () => {
   const { t } = useAppTranslation();
 
   const schedules = useAtomValue(schedulesState);
+  const persons = useAtomValue(personsState);
   const dataView = useAtomValue(userDataViewState);
   const monthNames = useAtomValue(monthShortNamesState);
+  const displayNameEnabled = useAtomValue(displayNameMeetingsEnableState);
+  const fullnameOption = useAtomValue(fullnameOptionState);
 
   const [value, setValue] = useState<number | boolean>(false);
 
@@ -44,6 +54,34 @@ const useDutiesContainer = () => {
   const schedule = useMemo(() => {
     return schedules.find((record) => record.weekOf === week);
   }, [schedules, week]);
+
+  const getAssignedName = useCallback(
+    (assignment: AssignmentFieldType) => {
+      if (!schedule) return '-';
+
+      const path = ASSIGNMENT_PATH[assignment];
+      const assigned = schedulesGetData(
+        schedule,
+        path,
+        dataView
+      ) as AssignmentCongregation;
+
+      if (!assigned?.value) return '-';
+
+      const person = persons.find(
+        (record) => record.person_uid === assigned.value
+      );
+
+      if (person) {
+        return personGetDisplayName(person, displayNameEnabled, fullnameOption);
+      }
+
+      if (assigned.name?.length > 0) return assigned.name;
+
+      return assigned.value;
+    },
+    [schedule, dataView, persons, displayNameEnabled, fullnameOption]
+  );
 
   const scheduleLastUpdated = useMemo(() => {
     if (!schedule || noSchedule) return;
@@ -108,6 +146,7 @@ const useDutiesContainer = () => {
     scheduleLastUpdated,
     noSchedule,
     dataView,
+    getAssignedName,
   };
 };
 
