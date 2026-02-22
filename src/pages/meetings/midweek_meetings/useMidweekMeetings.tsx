@@ -32,7 +32,7 @@ const useMidweekMeetings = () => {
       },
       {
         label: t('tr_departments'),
-        Component: <DutiesContainer />,
+        Component: <DutiesContainer meetingType="midweek" />,
       },
     ],
     [t]

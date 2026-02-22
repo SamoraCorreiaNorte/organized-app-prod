@@ -39,7 +39,12 @@ const useAssignmentItem = ({ history }: AssignmentItemProps) => {
   }, [history.assignment, t]);
 
   const isMidweek = useMemo(() => {
-    return history.assignment.key.startsWith('MM_');
+    if (history.assignment.meetingType) {
+      return history.assignment.meetingType === 'midweek';
+    }
+
+    const key = history.assignment.key ?? '';
+    return key.startsWith('MM_') || key.startsWith('MW_DUTIES_');
   }, [history.assignment]);
 
   const assignmentDate = useMemo(() => {

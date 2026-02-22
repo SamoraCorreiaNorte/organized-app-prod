@@ -6,6 +6,7 @@ import { addMonths, formatDate, getWeekDate } from '@utils/date';
 import {
   displayNameMeetingsEnableState,
   fullnameOptionState,
+  userLocalUIDState,
   userDataViewState,
 } from '@states/settings';
 import { ASSIGNMENT_PATH } from '@constants/index';
@@ -15,8 +16,9 @@ import { monthShortNamesState } from '@states/app';
 import { personsState } from '@states/persons';
 import { AssignmentFieldType } from '@definition/assignment';
 import { personGetDisplayName } from '@utils/common';
+import { WeeklySchedulesType } from '@features/meetings/weekly_schedules/week_selector/index.types';
 
-const useDutiesContainer = () => {
+const useDutiesContainer = (meetingType: WeeklySchedulesType) => {
   const currentWeekVisible = useIntersectionObserver({
     root: '.schedules-view-week-selector .MuiTabs-scroller',
     selector: '.schedules-current-week',
@@ -30,14 +32,21 @@ const useDutiesContainer = () => {
   const monthNames = useAtomValue(monthShortNamesState);
   const displayNameEnabled = useAtomValue(displayNameMeetingsEnableState);
   const fullnameOption = useAtomValue(fullnameOptionState);
+  const userUID = useAtomValue(userLocalUIDState);
 
   const [value, setValue] = useState<number | boolean>(false);
 
   const noSchedule = useMemo(() => {
     if (schedules.length === 0) return true;
 
-    return !schedules.some((schedule) => !!schedule.midweek_meeting);
-  }, [schedules]);
+    const hasMeeting = schedules.some((schedule) => {
+      if (meetingType === 'weekend') return !!schedule.weekend_meeting;
+
+      return !!schedule.midweek_meeting;
+    });
+
+    return !hasMeeting;
+  }, [schedules, meetingType]);
 
   const filteredSchedules = useMemo(() => {
     const minDate = formatDate(addMonths(new Date(), -2), 'yyyy/MM/dd');
@@ -55,9 +64,9 @@ const useDutiesContainer = () => {
     return schedules.find((record) => record.weekOf === week);
   }, [schedules, week]);
 
-  const getAssignedName = useCallback(
+  const getAssignedInfo = useCallback(
     (assignment: AssignmentFieldType) => {
-      if (!schedule) return '-';
+      if (!schedule) return { name: '-', active: false };
 
       const path = ASSIGNMENT_PATH[assignment];
       const assigned = schedulesGetData(
@@ -66,33 +75,45 @@ const useDutiesContainer = () => {
         dataView
       ) as AssignmentCongregation;
 
-      if (!assigned?.value) return '-';
+      if (!assigned?.value) return { name: '-', active: false };
+
+      const isActive = assigned.value === userUID;
 
       const person = persons.find(
         (record) => record.person_uid === assigned.value
       );
 
       if (person) {
-        return personGetDisplayName(person, displayNameEnabled, fullnameOption);
+        return {
+          name: personGetDisplayName(
+            person,
+            displayNameEnabled,
+            fullnameOption
+          ),
+          active: isActive,
+        };
       }
 
-      if (assigned.name?.length > 0) return assigned.name;
+      if (assigned.name?.length > 0) {
+        return { name: assigned.name, active: isActive };
+      }
 
-      return assigned.value;
+      return { name: assigned.value, active: isActive };
     },
-    [schedule, dataView, persons, displayNameEnabled, fullnameOption]
+    [schedule, dataView, persons, displayNameEnabled, fullnameOption, userUID]
   );
 
   const scheduleLastUpdated = useMemo(() => {
     if (!schedule || noSchedule) return;
 
     const assignments = Object.entries(ASSIGNMENT_PATH);
-    const midweekDutiesAssignments = assignments.filter((record) =>
-      record[0].startsWith('MW_DUTIES_')
+    const prefix = meetingType === 'weekend' ? 'WE' : 'MW';
+    const dutiesAssignments = assignments.filter((record) =>
+      record[0].startsWith(`${prefix}_DUTIES_`)
     );
 
     const dates: string[] = [];
-    for (const [, path] of midweekDutiesAssignments) {
+    for (const [, path] of dutiesAssignments) {
       const assigned = schedulesGetData(
         schedule,
         path,
@@ -120,7 +141,7 @@ const useDutiesContainer = () => {
     });
 
     return dateFormatted;
-  }, [schedule, dataView, monthNames, t, noSchedule]);
+  }, [schedule, dataView, monthNames, t, noSchedule, meetingType]);
 
   const handleGoCurrent = () => {
     const now = getWeekDate();
@@ -146,7 +167,7 @@ const useDutiesContainer = () => {
     scheduleLastUpdated,
     noSchedule,
     dataView,
-    getAssignedName,
+    getAssignedInfo,
   };
 };
 

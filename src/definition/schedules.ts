@@ -154,6 +154,7 @@ export type AssignmentHistoryType = {
     key?: AssignmentFieldType;
     code: AssignmentCode;
     title: string;
+    meetingType?: 'midweek' | 'weekend';
     src?: string;
     desc?: string;
     person: string;

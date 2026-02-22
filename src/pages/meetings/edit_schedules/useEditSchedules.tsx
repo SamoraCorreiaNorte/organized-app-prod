@@ -158,11 +158,37 @@ const useEditSchedules = () => {
     }
 
     if (value === 2) {
-      const { handleOpenQuickSettings } = dutiesState;
+      const {
+        handleOpenQuickSettings,
+        handleOpenExport,
+        handleOpenPublish,
+        hasWeeks,
+        isConnected,
+      } = dutiesState;
 
       return {
         title: t('tr_meetingDutiesScheduling'),
         quickAction: handleOpenQuickSettings,
+        buttons: hasWeeks && (
+          <>
+            <Button
+              variant="secondary"
+              onClick={handleOpenExport}
+              startIcon={<IconPrint />}
+            >
+              {t('tr_export')}
+            </Button>
+            {isConnected && (
+              <Button
+                variant="main"
+                startIcon={<IconPublish />}
+                onClick={handleOpenPublish}
+              >
+                {t('tr_publish')}
+              </Button>
+            )}
+          </>
+        ),
       };
     }
   }, [value, midweekState, weekendState, dutiesState, desktopUp, t]);

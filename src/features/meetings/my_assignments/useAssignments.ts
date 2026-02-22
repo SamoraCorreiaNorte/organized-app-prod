@@ -44,7 +44,11 @@ const useMyAssignments = () => {
     const remapAssignmentsDate = assignmentsHistory.map((record) => {
       const obj = structuredClone(record);
 
-      const isMidweek = obj.assignment.key.startsWith('MM_');
+      const assignmentKey = obj.assignment.key ?? '';
+      const isMidweek = obj.assignment.meetingType
+        ? obj.assignment.meetingType === 'midweek'
+        : assignmentKey.startsWith('MM_') ||
+          assignmentKey.startsWith('MW_DUTIES_');
 
       const meetingDate = schedulesGetMeetingDate({
         week: obj.weekOf,

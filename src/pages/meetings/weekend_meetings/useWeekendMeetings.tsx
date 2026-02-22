@@ -6,6 +6,7 @@ import { settingsState, userDataViewState } from '@states/settings';
 import WeekendContainer from '@features/meetings/weekly_schedules/weekend_container';
 import OutgoingTalks from '@features/meetings/weekly_schedules/outgoing_talks';
 import MeetingDutiesSchedule from '../duties';
+import DutiesContainer from '../midweek_meetings/duties_container';
 
 type WeekendMeetingsTabType = 'meeting' | 'departments' | 'outgoing';
 
@@ -57,7 +58,7 @@ const useWeekendMeetings = () => {
       },
       {
         label: t('tr_departments'),
-        Component: <MeetingDutiesSchedule />,
+        Component: <DutiesContainer meetingType="weekend" />,
       },
     ];
 

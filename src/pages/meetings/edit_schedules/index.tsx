@@ -1,5 +1,4 @@
 import { Box } from '@mui/material';
-import { useAppTranslation } from '@hooks/index';
 import useEditSchedules from './useEditSchedules';
 import PageTitle from '@components/page_title';
 import FloatingTabs from '@components/floating_tabs';
@@ -10,10 +9,10 @@ import ScheduleAutofillDialog from '@features/meetings/schedule_autofill';
 import QuickSettingsWeekendMeeting from '@features/meetings/weekend_editor/quick_settings';
 import WeekendExport from '@features/meetings/weekend_export';
 import QuickSettingsMeetingDuties from '@features/meetings/duties_schedule/quick_settings';
+import DutiesExport from '@features/meetings/duties_export';
+import DutiesPublishDialog from '@features/meetings/duties_publish';
 
 const EditSchedules = () => {
-  const { t } = useAppTranslation();
-
   const {
     value,
     handleScheduleChange,
@@ -90,6 +89,20 @@ const EditSchedules = () => {
         <QuickSettingsMeetingDuties
           open={dutiesState.quickSettingsOpen}
           onClose={dutiesState.handleCloseQuickSettings}
+        />
+      )}
+
+      {dutiesState.openExport && (
+        <DutiesExport
+          open={dutiesState.openExport}
+          onClose={dutiesState.handleCloseExport}
+        />
+      )}
+
+      {dutiesState.openPublish && (
+        <DutiesPublishDialog
+          open={dutiesState.openPublish}
+          onClose={dutiesState.handleClosePublish}
         />
       )}
 

@@ -18,7 +18,6 @@ const useWeekendContainer = () => {
   const { t } = useAppTranslation();
 
   const schedules = useAtomValue(schedulesState);
-  console.log('schedules', schedules);
   const dataView = useAtomValue(userDataViewState);
   const monthShortNames = useAtomValue(monthShortNamesState);
 

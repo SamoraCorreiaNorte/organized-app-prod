@@ -3,15 +3,15 @@ import { useAtomValue } from 'jotai';
 import { addMonths, formatDate, getWeekDate, isMondayDate } from '@utils/date';
 import { WeeklySchedulesType, WeekSelectorProps } from './index.types';
 import { sourcesState } from '@states/sources';
-import { localStorageGetItem } from '@utils/common';
 import { JWLangState } from '@states/settings';
 import { schedulesGetMeetingDate } from '@services/app/schedules';
 
-const LOCALSTORAGE_KEY = 'organized_weekly_schedules';
-
-const useWeekSelector = ({ onChange, value }: WeekSelectorProps) => {
-  const scheduleType = (localStorageGetItem(LOCALSTORAGE_KEY) ||
-    'midweek') as WeeklySchedulesType;
+const useWeekSelector = ({
+  onChange,
+  value,
+  meetingType,
+}: WeekSelectorProps) => {
+  const scheduleType = meetingType;
 
   const sources = useAtomValue(sourcesState);
   const lang = useAtomValue(JWLangState);

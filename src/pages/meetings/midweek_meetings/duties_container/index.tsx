@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Box, Stack } from '@mui/material';
 import { useAppTranslation } from '@hooks/index';
 import NoSchedule from '@features/meetings/weekly_schedules/no_schedule';
@@ -9,9 +8,7 @@ import {
   IconAudioMixer,
   IconComputerVideo,
   IconMicrophone,
-  IconGroups,
   IconConference,
-  IconCorporateFare,
   IconTalk,
   IconDoor,
   IconHallOverseer,
@@ -21,13 +18,17 @@ import DutyRow from './components/DutyRow';
 import DutyGroup from './components/DutyGroup';
 import ShiftCard from './components/ShiftCard';
 import Divider from '@components/divider';
-
-const WEEKLY_SCHEDULES_KEY = 'organized_weekly_schedules';
+import { WeeklySchedulesType } from '@features/meetings/weekly_schedules/week_selector/index.types';
+import { AssignmentFieldType } from '@definition/assignment';
 
 const BLUE = '#5d7bf1';
 const GREEN = '#2da88e';
 
-const DutiesContainer = () => {
+const DutiesContainer = ({
+  meetingType,
+}: {
+  meetingType: WeeklySchedulesType;
+}) => {
   const { t } = useAppTranslation();
 
   const {
@@ -38,16 +39,25 @@ const DutiesContainer = () => {
     currentWeekVisible,
     scheduleLastUpdated,
     noSchedule,
-    dataView,
-    getAssignedName,
-  } = useDutiesContainer();
+    getAssignedInfo,
+  } = useDutiesContainer(meetingType);
 
-  useEffect(() => {
-    const curr = localStorage.getItem(WEEKLY_SCHEDULES_KEY);
-    if (curr !== 'midweek') {
-      localStorage.setItem(WEEKLY_SCHEDULES_KEY, 'midweek');
-    }
-  }, []);
+  const dutyPrefix = meetingType === 'weekend' ? 'WE' : 'MW';
+  const getDutyAssignment = (suffix: string) =>
+    `${dutyPrefix}_DUTIES_${suffix}` as AssignmentFieldType;
+  const getDutyInfo = (suffix: string) =>
+    getAssignedInfo(getDutyAssignment(suffix));
+
+  const audioDuty = getDutyInfo('Audio');
+  const videoDuty = getDutyInfo('Video');
+  const microphone1Duty = getDutyInfo('Microphone_1');
+  const microphone2Duty = getDutyInfo('Microphone_2');
+  const stageDuty = getDutyInfo('Stage');
+  const videoConferenceDuty = getDutyInfo('VideoConference');
+  const entranceShift1Duty = getDutyInfo('EntranceAttendant_Shift_1');
+  const auditoriumShift1Duty = getDutyInfo('AuditoriumAttendant_Shift_1');
+  const entranceShift2Duty = getDutyInfo('EntranceAttendant_Shift_2');
+  const auditoriumShift2Duty = getDutyInfo('AuditoriumAttendant_Shift_2');
 
   return (
     <>
@@ -55,7 +65,11 @@ const DutiesContainer = () => {
 
       {!noSchedule && (
         <Box sx={{ marginTop: '8px' }}>
-          <WeekSelector value={value} onChange={handleValueChange} />
+          <WeekSelector
+            value={value}
+            onChange={handleValueChange}
+            meetingType={meetingType}
+          />
 
           <WeekScheduleHeader
             currentVisible={currentWeekVisible}
@@ -85,7 +99,8 @@ const DutiesContainer = () => {
                       <IconAudioMixer color={BLUE} width={20} height={20} />
                     }
                     label={t('tr_audio')}
-                    personName={getAssignedName('MW_DUTIES_Audio')}
+                    personName={audioDuty.name}
+                    isActive={audioDuty.active}
                     color={BLUE}
                   />
                   <DutyRow
@@ -93,7 +108,8 @@ const DutiesContainer = () => {
                       <IconComputerVideo color={BLUE} width={20} height={20} />
                     }
                     label={t('tr_video')}
-                    personName={getAssignedName('MW_DUTIES_Video')}
+                    personName={videoDuty.name}
+                    isActive={videoDuty.active}
                     color={BLUE}
                   />
                 </DutyGroup>
@@ -105,7 +121,8 @@ const DutiesContainer = () => {
                       <IconMicrophone color={BLUE} width={20} height={20} />
                     }
                     label="Micro 5"
-                    personName={getAssignedName('MW_DUTIES_Microphone_1')}
+                    personName={microphone1Duty.name}
+                    isActive={microphone1Duty.active}
                     color={BLUE}
                   />
                   <DutyRow
@@ -113,7 +130,8 @@ const DutiesContainer = () => {
                       <IconMicrophone color={BLUE} width={20} height={20} />
                     }
                     label="Micro 6"
-                    personName={getAssignedName('MW_DUTIES_Microphone_2')}
+                    personName={microphone2Duty.name}
+                    isActive={microphone2Duty.active}
                     color={BLUE}
                   />
                 </DutyGroup>
@@ -123,7 +141,8 @@ const DutiesContainer = () => {
                   <DutyRow
                     icon={<IconTalk color={BLUE} width={20} height={20} />}
                     label={t('tr_stage')}
-                    personName={getAssignedName('MW_DUTIES_Stage')}
+                    personName={stageDuty.name}
+                    isActive={stageDuty.active}
                     color={BLUE}
                   />
                 </DutyGroup>
@@ -135,7 +154,8 @@ const DutiesContainer = () => {
                       <IconConference color={BLUE} width={20} height={20} />
                     }
                     label={t('tr_dutiesVideoConference')}
-                    personName={getAssignedName('MW_DUTIES_VideoConference')}
+                    personName={videoConferenceDuty.name}
+                    isActive={videoConferenceDuty.active}
                     color={BLUE}
                   />
                 </DutyGroup>
@@ -166,9 +186,8 @@ const DutiesContainer = () => {
                     <DutyRow
                       icon={<IconDoor color={GREEN} width={20} height={20} />}
                       label="Hall"
-                      personName={getAssignedName(
-                        'MW_DUTIES_EntranceAttendant_Shift_1'
-                      )}
+                      personName={entranceShift1Duty.name}
+                      isActive={entranceShift1Duty.active}
                       color={GREEN}
                     />
                     <DutyRow
@@ -180,9 +199,8 @@ const DutiesContainer = () => {
                         />
                       }
                       label="Auditório"
-                      personName={getAssignedName(
-                        'MW_DUTIES_AuditoriumAttendant_Shift_1'
-                      )}
+                      personName={auditoriumShift1Duty.name}
+                      isActive={auditoriumShift1Duty.active}
                       color={GREEN}
                     />
                   </ShiftCard>
@@ -192,9 +210,8 @@ const DutiesContainer = () => {
                     <DutyRow
                       icon={<IconDoor color={GREEN} width={20} height={20} />}
                       label="Hall"
-                      personName={getAssignedName(
-                        'MW_DUTIES_EntranceAttendant_Shift_2'
-                      )}
+                      personName={entranceShift2Duty.name}
+                      isActive={entranceShift2Duty.active}
                       color={GREEN}
                     />
                     <DutyRow
@@ -206,9 +223,8 @@ const DutiesContainer = () => {
                         />
                       }
                       label="Auditório"
-                      personName={getAssignedName(
-                        'MW_DUTIES_AuditoriumAttendant_Shift_2'
-                      )}
+                      personName={auditoriumShift2Duty.name}
+                      isActive={auditoriumShift2Duty.active}
                       color={GREEN}
                     />
                   </ShiftCard>

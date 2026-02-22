@@ -1349,6 +1349,89 @@ export const schedulesGetHistoryDetails = ({
     }
   }
 
+  if (
+    assignment.startsWith('MW_DUTIES_') ||
+    assignment.startsWith('WE_DUTIES_')
+  ) {
+    const isMidweekDuty = assignment.startsWith('MW_DUTIES_');
+    const prefix = isMidweekDuty ? 'MW_DUTIES_' : 'WE_DUTIES_';
+    let dutyKey = assignment.replace(prefix, '');
+    let dutyNumber: string | null = null;
+
+    if (dutyKey.startsWith('Microphone_')) {
+      dutyNumber = dutyKey.replace('Microphone_', '');
+      dutyKey = 'Microphone';
+    }
+
+    if (dutyKey.startsWith('EntranceAttendant_Shift_')) {
+      dutyNumber = dutyKey.replace('EntranceAttendant_Shift_', '');
+      dutyKey = 'EntranceAttendant';
+    }
+
+    if (dutyKey.startsWith('AuditoriumAttendant_Shift_')) {
+      dutyNumber = dutyKey.replace('AuditoriumAttendant_Shift_', '');
+      dutyKey = 'AuditoriumAttendant';
+    }
+
+    const dutyCodeMap: Record<string, AssignmentCode> = {
+      Audio: AssignmentCode.DUTIES_Audio,
+      Video: AssignmentCode.DUTIES_Video,
+      Microphone: AssignmentCode.DUTIES_Microphone,
+      Stage: AssignmentCode.DUTIES_Stage,
+      EntranceAttendant: AssignmentCode.DUTIES_EntranceAttendant,
+      AuditoriumAttendant: AssignmentCode.DUTIES_AuditoriumAttendant,
+      VideoConference: AssignmentCode.DUTIES_VideoConference,
+    };
+
+    const dutyCode = dutyCodeMap[dutyKey];
+    const dutyTitle = assignments.find((record) => record.code === dutyCode)
+      ?.assignment_type_name[lang];
+    const dutyTitleFallbackMap: Record<string, string> = {
+      Audio: getTranslation({ key: 'tr_audio' }),
+      Video: getTranslation({ key: 'tr_video' }),
+      Microphone:
+        getTranslation({ key: 'tr_micro' }) ||
+        getTranslation({ key: 'tr_microphones' }),
+      Stage: getTranslation({ key: 'tr_stage' }),
+      EntranceAttendant: getTranslation({ key: 'tr_entranceAttendant' }),
+      AuditoriumAttendant: getTranslation({ key: 'tr_hallOverseer' }),
+      VideoConference:
+        getTranslation({ key: 'tr_dutiesVideoConference' }) ||
+        getTranslation({ key: 'tr_zoom' }),
+    };
+    const dutyBaseTitle =
+      (dutyTitle && dutyTitle.length > 0
+        ? dutyTitle
+        : dutyTitleFallbackMap[dutyKey]) || '';
+    const dutyTurnoLabel = dutyNumber ? `Turno ${dutyNumber}` : '';
+    const dutyTitleWithNumber = dutyBaseTitle
+      ? dutyTurnoLabel.length
+        ? `${dutyBaseTitle} (${dutyTurnoLabel})`
+        : dutyBaseTitle
+      : '';
+    const dutyMicroLabel = dutyNumber
+      ? dutyNumber === '1'
+        ? 'Micro 5'
+        : 'Micro 6'
+      : '';
+
+    if (dutyCode) {
+      history.assignment.code = dutyCode;
+    }
+
+    if (dutyKey === 'Microphone' && dutyMicroLabel.length > 0) {
+      history.assignment.title = dutyMicroLabel;
+    } else if (dutyTitleWithNumber && dutyTitleWithNumber.length > 0) {
+      history.assignment.title = dutyTitleWithNumber;
+    } else if (dutyBaseTitle.length > 0) {
+      history.assignment.title = dutyBaseTitle;
+    } else {
+      history.assignment.title = getTranslation({ key: 'tr_duties' });
+    }
+
+    history.assignment.meetingType = isMidweekDuty ? 'midweek' : 'weekend';
+  }
+
   return history;
 };
 

@@ -8,6 +8,7 @@ interface DutyRowProps {
   label: string;
   personName: string;
   color?: string;
+  isActive?: boolean;
 }
 
 const DutyRow = ({
@@ -15,6 +16,7 @@ const DutyRow = ({
   label,
   personName,
   color = '#5d7bf1',
+  isActive = false,
 }: DutyRowProps) => {
   return (
     <Box
@@ -50,6 +52,10 @@ const DutyRow = ({
           alignItems: 'center',
           gap: '.5rem',
           flex: 1,
+          ...(isActive && {
+            border: '1px solid var(--accent-click)',
+            backgroundColor: 'var(--accent-150)',
+          }),
         }}
       >
         <IconPerson color="var(--grey-350)" width={20} height={20} />
