@@ -38,7 +38,11 @@ const DutyRow = ({
           color: color,
           borderRadius: 'var(--radius-xl)',
           border: `1px solid ${alpha(color, 0.2)}`,
-          padding: tablet600Down ? '.5rem' : '.5rem .75rem',
+          padding: mobile400Down
+            ? '.5rem .25rem'
+            : tablet600Down
+              ? '.5rem'
+              : '.5rem .75rem',
           minWidth: tablet600Down ? '7rem' : '8rem',
         }}
       >

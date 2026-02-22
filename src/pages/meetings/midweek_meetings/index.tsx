@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { useAppTranslation } from '@hooks/index';
+import { useAppTranslation, useBreakpoints } from '@hooks/index';
 import PageTitle from '@components/page_title';
 import ScrollableTabs from '@components/scrollable_tabs';
 import useMidweekMeetings from './useMidweekMeetings';
@@ -7,6 +7,7 @@ import useMidweekMeetings from './useMidweekMeetings';
 const MidweekMeetings = () => {
   const { t } = useAppTranslation();
   const { value, handleTabChange, tabs } = useMidweekMeetings();
+  const { mobile400Down } = useBreakpoints();
 
   return (
     <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
@@ -15,7 +16,7 @@ const MidweekMeetings = () => {
       <Box
         sx={{
           backgroundColor: 'var(--white)',
-          padding: '15px',
+          padding: mobile400Down ? '10px' : '15px',
           border: '1px solid var(--accent-300)',
           borderRadius: 'var(--radius-l)',
         }}

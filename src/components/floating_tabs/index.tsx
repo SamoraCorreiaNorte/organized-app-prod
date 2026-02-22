@@ -28,7 +28,7 @@ function FloatingTabs({
   tabsCountOnScreen = 0,
   sx,
 }: CustomTabProps) {
-  const { tabletDown } = useBreakpoints();
+  const { tabletDown, mobile400Down } = useBreakpoints();
 
   const [valueOfActivePanel, setValueOfActivePanel] = useState(value ?? false);
 
@@ -63,7 +63,7 @@ function FloatingTabs({
         <Box
           sx={{
             backgroundColor: 'var(--white)',
-            padding: '15px',
+            padding: mobile400Down ? '10px' : '10px',
             border: '1px solid var(--accent-300)',
             borderRadius: 'var(--radius-l)',
           }}
