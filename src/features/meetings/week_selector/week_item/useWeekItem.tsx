@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
-import { useLocation } from 'react-router';
 import { useAtom, useAtomValue } from 'jotai';
+import { Week } from '@definition/week_type';
+import { MeetingType } from '@definition/app';
+import { formatMediumDateWithFullMonth } from '@utils/date';
 import { schedulesState, selectedWeekState } from '@states/schedules';
 import {
   schedulesGetMeetingDate,
@@ -10,11 +12,9 @@ import {
   userDataViewState,
   weekendMeetingOpeningPrayerAutoAssignState,
 } from '@states/settings';
-import { Week } from '@definition/week_type';
+import { WeekTypeCongregation } from '@definition/schedules';
 
-const useWeekItem = (week: string) => {
-  const location = useLocation();
-
+const useWeekItem = (week: string, meetingType: MeetingType) => {
   const [selectedWeek, setSelectedWeek] = useAtom(selectedWeekState);
 
   const schedules = useAtomValue(schedulesState);
@@ -27,46 +27,49 @@ const useWeekItem = (week: string) => {
     return schedules.find((record) => record.weekOf === week);
   }, [schedules, week]);
 
-  const meeting = useMemo(() => {
-    return location.pathname === '/midweek-meeting' ? 'midweek' : 'weekend';
-  }, [location.pathname]);
-
   const isSelected = useMemo(() => {
     return week === selectedWeek;
   }, [week, selectedWeek]);
 
   const weekType = useMemo(() => {
-    if (!schedule) return Week.NORMAL;
+    if (!schedule || meetingType === 'duties') return Week.NORMAL;
+
+    const field = schedule[`${meetingType}_meeting`]
+      .week_type as WeekTypeCongregation[];
 
     return (
-      schedule.midweek_meeting.week_type.find(
-        (record) => record.type === dataView
-      )?.value ?? Week.NORMAL
+      field.find((record) => record.type === dataView)?.value ?? Week.NORMAL
     );
-  }, [schedule, dataView]);
+  }, [schedule, dataView, meetingType]);
 
   const weekDateLocale = useMemo(() => {
-    const meetingDate = schedulesGetMeetingDate({ week, meeting });
+    if (meetingType === 'duties') {
+      return formatMediumDateWithFullMonth(week);
+    }
+
+    const meetingDate = schedulesGetMeetingDate({ week, meeting: meetingType });
 
     return meetingDate.locale;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [week, meeting, weekType]);
+  }, [week, meetingType, weekType]);
 
   const { assigned, total } = useMemo(() => {
     const values = { assigned: 0, total: 0 };
 
     if (!schedule) return values;
 
-    const data = schedulesWeekAssignmentsInfo(schedule.weekOf, meeting);
+    const data = schedulesWeekAssignmentsInfo(schedule.weekOf, meetingType);
 
     values.assigned = data.assigned;
     values.total = data.total;
 
     return values;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [schedule, meeting, prayerAutoAssign]);
+  }, [schedule, meetingType, prayerAutoAssign]);
 
-  const handleSelectWeek = (value: string) => setSelectedWeek(value);
+  const handleSelectWeek = (value: string) => {
+    setSelectedWeek(value);
+  };
 
   return { weekDateLocale, handleSelectWeek, isSelected, total, assigned };
 };

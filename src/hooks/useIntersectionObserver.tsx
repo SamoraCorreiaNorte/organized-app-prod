@@ -13,6 +13,12 @@ const useHookIntersectionObserver = ({
 
   useEffect(() => {
     const rootElement = document.querySelector(root);
+    const element = document.querySelector(selector);
+
+    if (!rootElement || !element) {
+      setVisible(false);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -27,12 +33,10 @@ const useHookIntersectionObserver = ({
       { root: rootElement, rootMargin }
     );
 
-    const element = document.querySelector(selector);
-
-    if (element) observer.observe(element);
+    observer.observe(element);
 
     return () => {
-      if (element) observer.unobserve(element);
+      observer.disconnect();
     };
   }, [root, selector, rootMargin]);
 

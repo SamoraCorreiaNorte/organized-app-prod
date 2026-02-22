@@ -11,8 +11,9 @@ import AssignmentsDelete from '../assignments_delete';
 import Button from '@components/button';
 import Typography from '@components/typography';
 import ScrollableTabs from '@components/scrollable_tabs';
+import { MeetingType } from '@definition/app';
 
-const WeekSelector = () => {
+const WeekSelector = ({ meetingType }: { meetingType: MeetingType }) => {
   const { t } = useAppTranslation();
 
   const { desktopUp } = useBreakpoints();
@@ -26,10 +27,9 @@ const WeekSelector = () => {
     handleCloseDelete,
     openDelete,
     handleOpenDelete,
-    meeting,
     sortDown,
     handleToggleSort,
-  } = useWeekSelector();
+  } = useWeekSelector(meetingType);
 
   return (
     <Box
@@ -49,7 +49,7 @@ const WeekSelector = () => {
     >
       {openDelete && (
         <AssignmentsDelete
-          meeting={meeting}
+          meeting={meetingType}
           open={openDelete}
           onClose={handleCloseDelete}
         />

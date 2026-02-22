@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router';
 import { useAtom, useAtomValue } from 'jotai';
 import { monthNamesState } from '@states/app';
-import { MonthItemType } from './index.types';
 import { schedulesWeekAssignmentsInfo } from '@services/app/schedules';
 import { schedulesState, selectedWeekState } from '@states/schedules';
 import {
@@ -11,15 +9,15 @@ import {
   weekendMeetingWeekdayState,
 } from '@states/settings';
 import { addDays } from '@utils/date';
+import { MonthItemType } from './index.types';
 
 const useMonthItem = ({
   month,
   weeks,
   currentExpanded,
   onChangeCurrentExpanded,
+  meetingType,
 }: MonthItemType) => {
-  const location = useLocation();
-
   const [selectedWeek, setSelectedWeek] = useAtom(selectedWeekState);
 
   const monthNames = useAtomValue(monthNamesState);
@@ -30,10 +28,6 @@ const useMonthItem = ({
 
   const [total, setTotal] = useState(0);
   const [assigned, setAssigned] = useState(0);
-
-  const meeting = useMemo(() => {
-    return location.pathname === '/midweek-meeting' ? 'midweek' : 'weekend';
-  }, [location.pathname]);
 
   const expanded = useMemo(() => {
     return currentExpanded === month.toString();
@@ -50,20 +44,19 @@ const useMonthItem = ({
   const meeting_month = useMemo(() => {
     if (!selectedWeek) return;
 
-    let toAdd: number;
+    let toAdd = 0;
 
-    if (meeting === 'midweek') {
+    if (meetingType === 'midweek') {
       toAdd = meetingExactDate ? midweekDay - 1 : 0;
     }
 
-    if (meeting === 'weekend') {
+    if (meetingType === 'weekend') {
       toAdd = weekendDay - 1;
     }
 
     const meetingDate = addDays(selectedWeek, toAdd);
-
     return meetingDate.getMonth().toString();
-  }, [selectedWeek, meeting, midweekDay, weekendDay, meetingExactDate]);
+  }, [selectedWeek, meetingType, midweekDay, weekendDay, meetingExactDate]);
 
   const counts = useMemo(() => {
     let total = 0;
@@ -76,14 +69,14 @@ const useMonthItem = ({
         continue;
       }
 
-      const data = schedulesWeekAssignmentsInfo(schedule.weekOf, meeting);
+      const data = schedulesWeekAssignmentsInfo(schedule.weekOf, meetingType);
 
       total += data.total;
       assigned += data.assigned;
     }
 
     return { total, assigned };
-  }, [weeks, schedules, meeting]);
+  }, [weeks, schedules, meetingType]);
 
   const handleToggleExpand = () => {
     if (currentExpanded === month.toString()) {

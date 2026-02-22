@@ -1,10 +1,8 @@
 import { Box } from '@mui/material';
-import { IconDate } from '@components/icons';
 import { useAppTranslation, useBreakpoints } from '@hooks/index';
 import { WeekScheduleHeaderProps } from './index.types';
 import useWeekScheduleHeader from './useWeekScheduleHeader';
 import Badge from '@components/badge';
-import Typography from '@components/typography';
 
 const WeekScheduleHeader = (props: WeekScheduleHeaderProps) => {
   const { t } = useAppTranslation();
@@ -28,7 +26,7 @@ const WeekScheduleHeader = (props: WeekScheduleHeaderProps) => {
         marginBottom: '16px',
       }}
     >
-      {showToCurrent && (
+      {/* {showToCurrent && (
         <Box
           onClick={props.onCurrent}
           sx={{
@@ -51,7 +49,7 @@ const WeekScheduleHeader = (props: WeekScheduleHeaderProps) => {
             {t('tr_toCurrentWeek')}
           </Typography>
         </Box>
-      )}
+      )} */}
 
       {props.lastUpdated && (
         <Badge

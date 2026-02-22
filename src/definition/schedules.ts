@@ -105,6 +105,16 @@ export type SchedWeekType = {
     circuit_overseer: AssignmentCongregation;
     aux_fsg?: { value: string; updatedAt: string };
     week_type: WeekTypeCongregation[];
+    duties_audio: AssignmentCongregation[];
+    duties_video: AssignmentCongregation[];
+    duties_microphone_1: AssignmentCongregation[];
+    duties_microphone_2: AssignmentCongregation[];
+    duties_stage: AssignmentCongregation[];
+    duties_video_conference: AssignmentCongregation[];
+    duties_entrance_attendant_shift_1: AssignmentCongregation[];
+    duties_entrance_attendant_shift_2: AssignmentCongregation[];
+    duties_auditorium_attendant_shift_1: AssignmentCongregation[];
+    duties_auditorium_attendant_shift_2: AssignmentCongregation[];
   };
   weekend_meeting: {
     chairman: AssignmentCongregation[];
@@ -123,6 +133,16 @@ export type SchedWeekType = {
     circuit_overseer: AssignmentCongregation;
     week_type: WeekTypeCongregation[];
     outgoing_talks: OutgoingTalkScheduleType[];
+    duties_audio: AssignmentCongregation[];
+    duties_video: AssignmentCongregation[];
+    duties_microphone_1: AssignmentCongregation[];
+    duties_microphone_2: AssignmentCongregation[];
+    duties_stage: AssignmentCongregation[];
+    duties_video_conference: AssignmentCongregation[];
+    duties_entrance_attendant_shift_1: AssignmentCongregation[];
+    duties_entrance_attendant_shift_2: AssignmentCongregation[];
+    duties_auditorium_attendant_shift_1: AssignmentCongregation[];
+    duties_auditorium_attendant_shift_2: AssignmentCongregation[];
   };
 };
 
@@ -134,6 +154,7 @@ export type AssignmentHistoryType = {
     key?: AssignmentFieldType;
     code: AssignmentCode;
     title: string;
+    meetingType?: 'midweek' | 'weekend';
     src?: string;
     desc?: string;
     person: string;

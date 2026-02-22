@@ -369,19 +369,6 @@ export const APP_READ_ONLY_ROLES: AppRoleType[] = [
   'language_group_overseers',
 ];
 
-export const APP_ROLES: AppRoleType[] = [
-  'admin',
-  'coordinator',
-  'midweek_schedule',
-  'weekend_schedule',
-  'field_service_schedule',
-  'public_talk_schedule',
-  'attendance_tracking',
-  'secretary',
-  'service_overseer',
-  ...APP_READ_ONLY_ROLES,
-];
-
 export const VIP_ROLES: AppRoleType[] = [
   'admin',
   'coordinator',
@@ -394,6 +381,7 @@ export const VIP_ROLES: AppRoleType[] = [
   'elder',
   'group_overseers',
   'language_group_overseers',
+  'duties_schedule',
 ];
 
 export const POCKET_ROLES: AppRoleType[] = [
@@ -402,6 +390,10 @@ export const POCKET_ROLES: AppRoleType[] = [
   'publisher',
   'view_schedules',
 ];
+
+export const APP_ROLES = Array.from(
+  new Set([...APP_READ_ONLY_ROLES, ...VIP_ROLES])
+) as AppRoleType[];
 
 export const APP_ENVIRONMENT = import.meta.env.VITE_APP_MODE;
 
@@ -452,6 +444,34 @@ export const ASSIGNMENT_PATH = {
   WM_CircuitOverseer: 'weekend_meeting.circuit_overseer',
   WM_SubstituteSpeaker: 'weekend_meeting.speaker.substitute',
   WM_Speaker_Outgoing: 'weekend_meeting.outgoing_talks',
+  MW_DUTIES_Audio: 'midweek_meeting.duties_audio',
+  MW_DUTIES_Video: 'midweek_meeting.duties_video',
+  MW_DUTIES_Stage: 'midweek_meeting.duties_stage',
+  MW_DUTIES_Microphone_1: 'midweek_meeting.duties_microphone_1',
+  MW_DUTIES_Microphone_2: 'midweek_meeting.duties_microphone_2',
+  MW_DUTIES_VideoConference: 'midweek_meeting.duties_video_conference',
+  MW_DUTIES_EntranceAttendant_Shift_1:
+    'midweek_meeting.duties_entrance_attendant_shift_1',
+  MW_DUTIES_EntranceAttendant_Shift_2:
+    'midweek_meeting.duties_entrance_attendant_shift_2',
+  MW_DUTIES_AuditoriumAttendant_Shift_1:
+    'midweek_meeting.duties_auditorium_attendant_shift_1',
+  MW_DUTIES_AuditoriumAttendant_Shift_2:
+    'midweek_meeting.duties_auditorium_attendant_shift_2',
+  WE_DUTIES_Audio: 'weekend_meeting.duties_audio',
+  WE_DUTIES_Video: 'weekend_meeting.duties_video',
+  WE_DUTIES_Stage: 'weekend_meeting.duties_stage',
+  WE_DUTIES_Microphone_1: 'weekend_meeting.duties_microphone_1',
+  WE_DUTIES_Microphone_2: 'weekend_meeting.duties_microphone_2',
+  WE_DUTIES_VideoConference: 'weekend_meeting.duties_video_conference',
+  WE_DUTIES_EntranceAttendant_Shift_1:
+    'weekend_meeting.duties_entrance_attendant_shift_1',
+  WE_DUTIES_EntranceAttendant_Shift_2:
+    'weekend_meeting.duties_entrance_attendant_shift_2',
+  WE_DUTIES_AuditoriumAttendant_Shift_1:
+    'weekend_meeting.duties_auditorium_attendant_shift_1',
+  WE_DUTIES_AuditoriumAttendant_Shift_2:
+    'weekend_meeting.duties_auditorium_attendant_shift_2',
 };
 
 export const BROTHER_ASSIGNMENT = [
@@ -469,6 +489,13 @@ export const BROTHER_ASSIGNMENT = [
   AssignmentCode.WM_SpeakerSymposium,
   AssignmentCode.WM_WTStudyConductor,
   AssignmentCode.WM_WTStudyReader,
+  AssignmentCode.DUTIES_Audio,
+  AssignmentCode.DUTIES_AuditoriumAttendant,
+  AssignmentCode.DUTIES_EntranceAttendant,
+  AssignmentCode.DUTIES_Microphone,
+  AssignmentCode.DUTIES_Stage,
+  AssignmentCode.DUTIES_Video,
+  AssignmentCode.DUTIES_VideoConference,
 ];
 
 export const STUDENT_ASSIGNMENT = [

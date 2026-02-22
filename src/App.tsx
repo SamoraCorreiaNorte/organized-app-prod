@@ -38,14 +38,12 @@ const MeetingAttendance = lazy(
 const FieldServiceReportsPage = lazy(
   () => import('@pages/reports/field_service')
 );
-const MidweekMeeting = lazy(() => import('@pages/meetings/midweek'));
 const MinistryReport = lazy(() => import('@pages/ministry/ministry_report'));
 const ServiceYear = lazy(() => import('@pages/ministry/service_year'));
 const AuxiliaryPioneerApplication = lazy(
   () => import('@pages/ministry/auxiliary_pioneer')
 );
 const SpeakersCatalog = lazy(() => import('@pages/persons/speakers_catalog'));
-const WeekendMeeting = lazy(() => import('@pages/meetings/weekend'));
 const FieldServiceGroups = lazy(
   () => import('@pages/congregation/field_service_groups')
 );
@@ -60,6 +58,9 @@ const UserDetails = lazy(
   () => import('@pages/congregation/manage_access/user_details')
 );
 const WeeklySchedules = lazy(() => import('@pages/meetings/schedules'));
+const EditSchedules = lazy(() => import('@pages/meetings/edit_schedules'));
+const MidweekMeetings = lazy(() => import('@pages/meetings/midweek_meetings'));
+const WeekendMeetings = lazy(() => import('@pages/meetings/weekend_meetings'));
 const CongregationSettings = lazy(() => import('@pages/congregation/settings'));
 const Applications = lazy(() => import('@pages/persons/applications'));
 const ApplicationDetails = lazy(
@@ -93,6 +94,7 @@ const App = ({ updatePwa }: { updatePwa: VoidFunction }) => {
     isServiceCommittee,
     isGroup,
     isLanguageGroupOverseer,
+    isDutiesEditor,
   } = useCurrentUser();
 
   const [adapterLocale, setAdapterLocale] = useAtom(appLocaleState);
@@ -113,6 +115,8 @@ const App = ({ updatePwa }: { updatePwa: VoidFunction }) => {
             { index: true, element: <Dashboard /> },
             { path: '/user-profile', element: <MyProfile /> },
             { path: '/weekly-schedules', element: <WeeklySchedules /> },
+            { path: '/midweek-meetings', element: <MidweekMeetings /> },
+            { path: '/weekend-meetings', element: <WeekendMeetings /> },
             {
               path: '/activities/upcoming-events',
               element: <UpcomingEvents />,
@@ -224,26 +228,49 @@ const App = ({ updatePwa }: { updatePwa: VoidFunction }) => {
                 },
               ],
             },
-
-            // midweek editor routes
-            {
-              element: <RouteProtected allowed={isMidweekEditor} />,
-              children: [
-                { path: '/midweek-meeting', element: <MidweekMeeting /> },
-              ],
-            },
-
-            // weekend editor routes
             {
               element: (
                 <RouteProtected
-                  allowed={isWeekendEditor || isPublicTalkCoordinator}
+                  allowed={
+                    isMidweekEditor ||
+                    isWeekendEditor ||
+                    isPublicTalkCoordinator ||
+                    isDutiesEditor
+                  }
                 />
               ),
               children: [
-                { path: '/weekend-meeting', element: <WeekendMeeting /> },
+                { path: '/edit-schedules', element: <EditSchedules /> },
               ],
             },
+
+            // meeeting duties editor routes
+            // {
+            //   element: <RouteProtected allowed={isDutiesEditor} />,
+            //   children: [
+            //     { path: '/meeting-duties', element: <MeetingDuties /> },
+            //   ],
+            // },
+
+            // midweek editor routes
+            // {
+            //   element: <RouteProtected allowed={isMidweekEditor} />,
+            //   children: [
+            //     { path: '/midweek-meeting', element: <MidweekMeeting /> },
+            //   ],
+            // },
+
+            // weekend editor routes
+            // {
+            //   element: (
+            //     <RouteProtected
+            //       allowed={isWeekendEditor || isPublicTalkCoordinator}
+            //     />
+            //   ),
+            //   children: [
+            //     { path: '/weekend-meeting', element: <WeekendMeeting /> },
+            //   ],
+            // },
 
             // secretary routes and group overseer
             {

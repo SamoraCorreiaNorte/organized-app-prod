@@ -31,7 +31,11 @@ const WeekendContainer = () => {
             marginTop: '8px',
           }}
         >
-          <WeekSelector value={value} onChange={handleValueChange} />
+          <WeekSelector
+            value={value}
+            onChange={handleValueChange}
+            meetingType="weekend"
+          />
 
           <WeekScheduleHeader
             currentVisible={currentWeekVisible}
