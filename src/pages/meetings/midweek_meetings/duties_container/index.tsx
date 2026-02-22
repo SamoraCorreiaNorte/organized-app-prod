@@ -1,5 +1,5 @@
 import { Box, Stack } from '@mui/material';
-import { useAppTranslation } from '@hooks/index';
+import { useAppTranslation, useBreakpoints } from '@hooks/index';
 import NoSchedule from '@features/meetings/weekly_schedules/no_schedule';
 import WeekScheduleHeader from '@features/meetings/weekly_schedules/week_schedule_header';
 import WeekSelector from '@features/meetings/weekly_schedules/week_selector';
@@ -30,6 +30,7 @@ const DutiesContainer = ({
   meetingType: WeeklySchedulesType;
 }) => {
   const { t } = useAppTranslation();
+  const { tablet600Down, laptop856Down, mobile400Down } = useBreakpoints();
 
   const {
     handleGoCurrent,
@@ -177,8 +178,8 @@ const DutiesContainer = ({
                 <Box
                   sx={{
                     display: 'flex',
-                    gap: '.75rem',
-                    flexWrap: 'wrap',
+                    gap: mobile400Down ? '.5rem' : '.75rem',
+                    flexDirection: laptop856Down ? 'column' : 'row',
                   }}
                 >
                   {/* Turno 1 */}

@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Box, alpha } from '@mui/material';
 import Typography from '@components/typography';
 import { IconClock } from '@components/icons';
+import useBreakpoints from '@hooks/useBreakpoints';
 
 interface TurnoCardProps {
   title: string;
@@ -10,6 +11,7 @@ interface TurnoCardProps {
 }
 
 const ShiftCard = ({ title, children, color = '#2da88e' }: TurnoCardProps) => {
+  const { mobile400Down } = useBreakpoints();
   return (
     <Box
       sx={{
@@ -48,8 +50,8 @@ const ShiftCard = ({ title, children, color = '#2da88e' }: TurnoCardProps) => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '.75rem',
-          padding: '.75rem',
+          gap: mobile400Down ? '.5rem' : '.75rem',
+          padding: mobile400Down ? '.5rem' : '.75rem',
         }}
       >
         {children}
