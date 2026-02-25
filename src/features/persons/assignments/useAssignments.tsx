@@ -136,9 +136,9 @@ const useAssignments = () => {
         ],
       },
       {
-        header: t('tr_duties'),
-        id: 'duties',
-        color: 'duties' as AssignmentCheckListColors,
+        header: t('tr_soundDepartments'),
+        id: 'sound',
+        color: 'sound' as AssignmentCheckListColors,
         items: [
           {
             code: AssignmentCode.DUTIES_Audio,
@@ -150,16 +150,23 @@ const useAssignments = () => {
           },
           {
             code: AssignmentCode.DUTIES_Microphone,
-            name: t('tr_dutiesMicrophone'),
+            name: t('tr_dutiesMicrophones'),
           },
-          {
-            code: AssignmentCode.DUTIES_Stage,
-            name: t('tr_dutiesStage'),
-          },
+          // {
+          //   code: AssignmentCode.DUTIES_Stage,
+          //   name: t('tr_dutiesStage'),
+          // },
           {
             code: AssignmentCode.DUTIES_VideoConference,
             name: t('tr_dutiesVideoConference'),
           },
+        ],
+      },
+      {
+        header: t('tr_attendantsDepartment'),
+        id: 'attendants',
+        color: 'attendants' as AssignmentCheckListColors,
+        items: [
           {
             code: AssignmentCode.DUTIES_EntranceAttendant,
             name: t('tr_dutiesEntranceAttendant'),

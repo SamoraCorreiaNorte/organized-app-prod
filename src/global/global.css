@@ -25,7 +25,8 @@
   --text-apply-yourself-to-the-field-ministry: #956711ff;
   --text-treasures-from-gods-word: #2a6b77ff;
   --text_living-as-christians: #942926ff;
-  --duties: #866151ff;
+  --sound: rgb(72, 95, 208);
+  --attendants: var(--green-main);
 
   /* global group-colors variables (light mode, more vivid and distinguishable) */
   --group-1: #00b215;

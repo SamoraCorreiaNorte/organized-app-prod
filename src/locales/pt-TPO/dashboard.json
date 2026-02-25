@@ -108,5 +108,7 @@
   "tr_groupSettings": "Definições do grupo",
   "tr_languageGroupShort": "Grupo",
   "tr_editSchedules": "Programar reuniões",
-  "tr_departments": "Departamentos"
+  "tr_departments": "Departamentos",
+  "tr_soundDepartments": "Departamento de Som",
+  "tr_attendantsDepartment": "Departamento de Indicadores"
 }

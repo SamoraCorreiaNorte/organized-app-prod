@@ -49,7 +49,7 @@ const DutiesEditor = () => {
             <Typography className="h4">{t('tr_dutiesAudio')}</Typography>
             <AudioVideo dayType={dayType} />
             <Microphones dayType={dayType} />
-            <Stage dayType={dayType} />
+            {/* <Stage dayType={dayType} /> */}
             <VideoConference dayType={dayType} />
           </Stack>
 

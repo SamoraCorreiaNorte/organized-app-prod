@@ -503,6 +503,7 @@
   "tr_cantAddANewGroup": "Can't add a new group",
   "tr_maximumAmountOfGroupsIs10": "Maximum amount of field service groups is 10",
   "tr_fieldServiceMeetings": "Meetings for field service",
+  "tr_fieldServiceMeetingsShort": "Field service Meetings",
   "tr_export": "Export",
   "tr_add": "Add",
   "tr_publish": "Publish",

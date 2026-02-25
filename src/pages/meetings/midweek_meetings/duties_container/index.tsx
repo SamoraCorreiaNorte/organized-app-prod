@@ -53,7 +53,7 @@ const DutiesContainer = ({
   const videoDuty = getDutyInfo('Video');
   const microphone1Duty = getDutyInfo('Microphone_1');
   const microphone2Duty = getDutyInfo('Microphone_2');
-  const stageDuty = getDutyInfo('Stage');
+  // const stageDuty = getDutyInfo('Stage');
   const videoConferenceDuty = getDutyInfo('VideoConference');
   const entranceShift1Duty = getDutyInfo('EntranceAttendant_Shift_1');
   const auditoriumShift1Duty = getDutyInfo('AuditoriumAttendant_Shift_1');
@@ -136,8 +136,8 @@ const DutiesContainer = ({
                     color={BLUE}
                   />
                 </DutyGroup>
-
-                {/* Palco */}
+                {/* 
+                {/* Palco }
                 <DutyGroup>
                   <DutyRow
                     icon={<IconTalk color={BLUE} width={20} height={20} />}
@@ -146,7 +146,7 @@ const DutiesContainer = ({
                     isActive={stageDuty.active}
                     color={BLUE}
                   />
-                </DutyGroup>
+                </DutyGroup> */}
 
                 {/* Video conferência */}
                 <DutyGroup>
