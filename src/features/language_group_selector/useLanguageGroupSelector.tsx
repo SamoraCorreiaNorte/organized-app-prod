@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAppTranslation, useCurrentUser } from '@hooks/index';
 import {
-  dbAppSettingsSetupMeetingDuties,
+  // dbAppSettingsSetupMeetingDuties,
   dbAppSettingsUpdate,
 } from '@services/dexie/settings';
 import {
@@ -73,7 +73,7 @@ const useGroupLanguageSelector = () => {
 
     await refreshLocalesResources();
 
-    await dbAppSettingsSetupMeetingDuties();
+    // await dbAppSettingsSetupMeetingDuties();
 
     // load assignment history
     const history = schedulesBuildHistoryList();
