@@ -34,7 +34,7 @@ import { dbMetadataDefault } from '@services/dexie/metadata';
 import {
   dbAppSettingsCreatePublishersSort,
   dbAppSettingsGet,
-  dbAppSettingsSetupMeetingDuties,
+  // dbAppSettingsSetupMeetingDuties,
   dbAppSettingsUpdate,
   dbAppSettingsUpdateCongNumber,
   dbAppSettingsUpdateWithoutNotice,
@@ -98,7 +98,7 @@ export const runUpdater = async () => {
   await dbFieldServiceMeetingsCleanup();
   await dbAppSettingsUpdateCongNumber();
   await dbSpeakersCongregationsSetName();
-  await dbAppSettingsSetupMeetingDuties();
+  // await dbAppSettingsSetupMeetingDuties();
 };
 
 export const userLogoutSuccess = async () => {
