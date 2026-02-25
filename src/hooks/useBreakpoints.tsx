@@ -18,6 +18,9 @@ const useHookBreakpoints = () => {
   const tablet600Down = useMediaQuery(theme.breakpoints.down('tablet600'), {
     noSsr: true,
   });
+  const laptop856Down = useMediaQuery(theme.breakpoints.down('laptop856'), {
+    noSsr: true,
+  });
 
   const tabletUp = useMediaQuery(theme.breakpoints.up('tablet'), {
     noSsr: true,
@@ -58,6 +61,7 @@ const useHookBreakpoints = () => {
     laptopUp,
     desktopUp,
     tablet688Up,
+    laptop856Down,
     desktopLargeUp,
   };
 };

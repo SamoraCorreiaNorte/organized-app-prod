@@ -6,7 +6,7 @@ import Typography from '@components/typography';
 import WeekItem from '../week_item';
 
 const MonthItem = (props: MonthItemType) => {
-  const { weeks } = props;
+  const { weeks, meetingType } = props;
 
   const { monthName, expanded, handleToggleExpand, assignComplete } =
     useMonthItem(props);
@@ -53,7 +53,7 @@ const MonthItem = (props: MonthItemType) => {
       </Box>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         {weeks.map((week) => (
-          <WeekItem key={week} week={week} />
+          <WeekItem key={week} week={week} meetingType={meetingType} />
         ))}
       </Collapse>
     </Box>

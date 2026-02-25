@@ -3,6 +3,7 @@ import {
   IconAssignment,
   IconCalendarWeek,
   IconDiamond,
+  IconDuties,
   IconTalk,
 } from '@icons/index';
 import { useAppTranslation, useCurrentUser } from '@hooks/index';
@@ -15,10 +16,15 @@ import DashboardMenu from '@features/dashboard/menu';
 const MeetingsCard = ({ assignmentCount }: MeetingsCardProps) => {
   const { t } = useAppTranslation();
 
-  const { isMidweekEditor, isWeekendEditor, isPublicTalkCoordinator } =
-    useCurrentUser();
+  const {
+    isMidweekEditor,
+    isWeekendEditor,
+    isPublicTalkCoordinator,
+    isDutiesEditor,
+  } = useCurrentUser();
 
-  const { showMeetingCard, showMidweek, showWeekend } = useSharedHook();
+  const { showMeetingCard, showMidweek, showWeekend, showDuties } =
+    useSharedHook();
 
   const { handleOpenMyAssignments } = useMeetings();
 
@@ -34,33 +40,36 @@ const MeetingsCard = ({ assignmentCount }: MeetingsCardProps) => {
           onClick={handleOpenMyAssignments}
         />
       </ListItem>
+
+      {showDuties &&
+        (isMidweekEditor ||
+          isWeekendEditor ||
+          isPublicTalkCoordinator ||
+          isDutiesEditor) && (
+          <ListItem disablePadding>
+            <DashboardMenu
+              icon={<IconCalendarWeek color="var(--black)" />}
+              primaryText={t('tr_editSchedules')}
+              path="/edit-schedules"
+            />
+          </ListItem>
+        )}
+
       <ListItem disablePadding>
         <DashboardMenu
-          icon={<IconCalendarWeek color="var(--black)" />}
-          primaryText={t('tr_viewAssignmentsSchedule')}
-          path="/weekly-schedules"
+          icon={<IconDiamond color="var(--black)" />}
+          primaryText={t('tr_midweekMeeting')}
+          path="/midweek-meetings"
         />
       </ListItem>
 
-      {showMidweek && isMidweekEditor && (
-        <ListItem disablePadding>
-          <DashboardMenu
-            icon={<IconDiamond color="var(--black)" />}
-            primaryText={t('tr_midweekMeeting')}
-            path="/midweek-meeting"
-          />
-        </ListItem>
-      )}
-
-      {showWeekend && (isWeekendEditor || isPublicTalkCoordinator) && (
-        <ListItem disablePadding>
-          <DashboardMenu
-            icon={<IconTalk color="var(--black)" />}
-            primaryText={t('tr_weekendMeeting')}
-            path="/weekend-meeting"
-          />
-        </ListItem>
-      )}
+      <ListItem disablePadding>
+        <DashboardMenu
+          icon={<IconTalk color="var(--black)" />}
+          primaryText={t('tr_weekendMeeting')}
+          path="/weekend-meetings"
+        />
+      </ListItem>
     </DashboardCard>
   );
 };

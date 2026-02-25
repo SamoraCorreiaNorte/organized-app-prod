@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { IconError } from '@components/icons';
 import { PersonOptionsType, PersonSelectorType } from '../index.types';
@@ -45,9 +44,12 @@ import { getMessageByCode } from '@services/i18n/translation';
 import { formatDate } from '@utils/date';
 import { languageGroupsState } from '@states/field_service_groups';
 
-const useBrotherSelector = ({ type, week, assignment }: PersonSelectorType) => {
-  const location = useLocation();
-
+const useBrotherSelector = ({
+  type,
+  week,
+  assignment,
+  meetingType,
+}: PersonSelectorType) => {
   const { t } = useAppTranslation();
 
   const openingPrayerLinked = useAtomValue(
@@ -406,14 +408,9 @@ const useBrotherSelector = ({ type, week, assignment }: PersonSelectorType) => {
   }, [value, assignmentsHistory]);
 
   const meetingDate = useMemo(() => {
-    const meeting = location.pathname.includes('midweek')
-      ? 'midweek'
-      : 'weekend';
-
-    const date = schedulesGetMeetingDate({ week, meeting });
-
+    const date = schedulesGetMeetingDate({ week, meeting: meetingType });
     return date.date;
-  }, [location.pathname, week]);
+  }, [week, meetingType]);
 
   const helperText = useMemo(() => {
     if (!value || week.length === 0) return '';

@@ -169,6 +169,26 @@ export const scheduleSchema: SchedWeekType = {
     circuit_overseer: { type: 'main', value: '', name: '', updatedAt: '' },
     aux_fsg: { value: '', updatedAt: '' },
     week_type: [{ type: 'main', value: Week.NORMAL, updatedAt: '' }],
+    duties_audio: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_video: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_microphone_1: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_microphone_2: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_stage: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_video_conference: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_entrance_attendant_shift_1: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_entrance_attendant_shift_2: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_auditorium_attendant_shift_1: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_auditorium_attendant_shift_2: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
   },
   weekend_meeting: {
     chairman: [{ type: 'main', value: '', name: '', updatedAt: '' }],
@@ -195,6 +215,26 @@ export const scheduleSchema: SchedWeekType = {
     circuit_overseer: { type: 'main', value: '', name: '', updatedAt: '' },
     week_type: [{ type: 'main', value: Week.NORMAL, updatedAt: '' }],
     outgoing_talks: [],
+    duties_audio: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_video: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_microphone_1: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_microphone_2: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_stage: [{ type: 'main', value: '', name: '', updatedAt: '' }],
+    duties_video_conference: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_entrance_attendant_shift_1: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_entrance_attendant_shift_2: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_auditorium_attendant_shift_1: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
+    duties_auditorium_attendant_shift_2: [
+      { type: 'main', value: '', name: '', updatedAt: '' },
+    ],
   },
 };
 
@@ -354,6 +394,7 @@ export const settingSchema: SettingsType = {
     schedule_songs_weekend: [
       { type: 'main', value: false, _deleted: false, updatedAt: '' },
     ],
+    meeting_duties: [],
   },
   user_settings: {
     cong_role: [],

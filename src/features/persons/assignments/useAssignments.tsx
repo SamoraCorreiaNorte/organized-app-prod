@@ -135,6 +135,48 @@ const useAssignments = () => {
           },
         ],
       },
+      {
+        header: t('tr_soundDepartments'),
+        id: 'sound',
+        color: 'sound' as AssignmentCheckListColors,
+        items: [
+          {
+            code: AssignmentCode.DUTIES_Audio,
+            name: t('tr_dutiesAudio'),
+          },
+          {
+            code: AssignmentCode.DUTIES_Video,
+            name: t('tr_dutiesVideo'),
+          },
+          {
+            code: AssignmentCode.DUTIES_Microphone,
+            name: t('tr_dutiesMicrophones'),
+          },
+          // {
+          //   code: AssignmentCode.DUTIES_Stage,
+          //   name: t('tr_dutiesStage'),
+          // },
+          {
+            code: AssignmentCode.DUTIES_VideoConference,
+            name: t('tr_dutiesVideoConference'),
+          },
+        ],
+      },
+      {
+        header: t('tr_attendantsDepartment'),
+        id: 'attendants',
+        color: 'attendants' as AssignmentCheckListColors,
+        items: [
+          {
+            code: AssignmentCode.DUTIES_EntranceAttendant,
+            name: t('tr_dutiesEntranceAttendant'),
+          },
+          {
+            code: AssignmentCode.DUTIES_AuditoriumAttendant,
+            name: t('tr_dutiesAuditoriumAttendant'),
+          },
+        ],
+      },
     ];
   }, [t]);
 

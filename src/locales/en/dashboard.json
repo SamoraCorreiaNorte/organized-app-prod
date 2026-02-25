@@ -106,5 +106,9 @@
   "tr_improvements": "Improvements:",
   "tr_ok": "OK",
   "tr_groupSettings": "Group settings",
-  "tr_languageGroupShort": "Group"
+  "tr_languageGroupShort": "Group",
+  "tr_editSchedules": "Edit schedules",
+  "tr_departments": "Departments",
+  "tr_soundDepartments": "Sound Department",
+  "tr_attendantsDepartment": "Attendants Department"
 }

@@ -31,7 +31,11 @@ const MidweekContainer = () => {
             marginTop: '8px',
           }}
         >
-          <WeekSelector value={value} onChange={handleValueChange} />
+          <WeekSelector
+            value={value}
+            onChange={handleValueChange}
+            meetingType="midweek"
+          />
 
           <WeekScheduleHeader
             currentVisible={currentWeekVisible}

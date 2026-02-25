@@ -1,4 +1,4 @@
-import { cloneElement, useEffect } from 'react';
+import { cloneElement } from 'react';
 import { Box } from '@mui/material';
 import { IconCheck, IconClose, IconDelete } from '@components/icons';
 import { useAppTranslation, useBreakpoints } from '@hooks/index';
@@ -39,10 +39,6 @@ const EditUpcomingEvent = (props: EditUpcomingEventProps) => {
     handleChangeEventEndDate,
     handleChangeEventEndTime,
   } = useEditUpcomingEvent(props);
-
-  useEffect(() => {
-    console.log('Local Event Updated:', localEvent.event_data.start);
-  }, [localEvent]);
 
   return (
     <Box

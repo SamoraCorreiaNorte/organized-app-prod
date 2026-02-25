@@ -30,6 +30,13 @@ export enum AssignmentCode {
   MM_AssistantOnly = 129,
   WM_WTStudyConductor = 130,
   MINISTRY_HOURS_CREDIT = 300,
+  DUTIES_Audio = 400,
+  DUTIES_Video = 401,
+  DUTIES_Microphone = 402,
+  DUTIES_Stage = 403,
+  DUTIES_EntranceAttendant = 404,
+  DUTIES_AuditoriumAttendant = 405,
+  DUTIES_VideoConference = 406,
 }
 
 export type AssignmentType = {
@@ -119,9 +126,32 @@ export type AssignmentFieldWeekendType =
   | 'WM_ClosingPrayer'
   | 'WM_SubstituteSpeaker';
 
+export type AssignmentFieldDutiesType =
+  | 'MW_DUTIES_Audio'
+  | 'MW_DUTIES_Video'
+  | 'MW_DUTIES_Microphone_1'
+  | 'MW_DUTIES_Microphone_2'
+  | 'MW_DUTIES_Stage'
+  | 'MW_DUTIES_VideoConference'
+  | 'MW_DUTIES_EntranceAttendant_Shift_1'
+  | 'MW_DUTIES_EntranceAttendant_Shift_2'
+  | 'MW_DUTIES_AuditoriumAttendant_Shift_1'
+  | 'MW_DUTIES_AuditoriumAttendant_Shift_2'
+  | 'WE_DUTIES_Audio'
+  | 'WE_DUTIES_Video'
+  | 'WE_DUTIES_Microphone_1'
+  | 'WE_DUTIES_Microphone_2'
+  | 'WE_DUTIES_Stage'
+  | 'WE_DUTIES_VideoConference'
+  | 'WE_DUTIES_EntranceAttendant_Shift_1'
+  | 'WE_DUTIES_EntranceAttendant_Shift_2'
+  | 'WE_DUTIES_AuditoriumAttendant_Shift_1'
+  | 'WE_DUTIES_AuditoriumAttendant_Shift_2';
+
 export type AssignmentFieldType =
   | AssignmentFieldMidweekType
   | AssignmentFieldWeekendType
   | 'MM_CircuitOverseer'
   | 'WM_CircuitOverseer'
-  | 'WM_Speaker_Outgoing';
+  | 'WM_Speaker_Outgoing'
+  | AssignmentFieldDutiesType;

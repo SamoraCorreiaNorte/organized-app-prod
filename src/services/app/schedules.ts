@@ -105,10 +105,12 @@ import {
 import { monthNamesState, monthShortNamesState } from '@states/app';
 import { getTranslation } from '@services/i18n/translation';
 import { songsLocaleState } from '@states/songs';
+import { MeetingType } from '@definition/app';
 
 export const schedulesWeekAssignmentsInfo = (
   week: string,
-  meeting: 'midweek' | 'weekend'
+  meeting: MeetingType,
+  dayType?: 'midweek' | 'weekend'
 ) => {
   let total = 0;
   let assigned = 0;
@@ -121,6 +123,18 @@ export const schedulesWeekAssignmentsInfo = (
 
   if (meeting === 'weekend') {
     const data = schedulesWeekendInfo(week);
+    total = data.total;
+    assigned = data.assigned;
+  }
+
+  if (meeting === 'duties' && dayType === 'midweek') {
+    const data = schedulesDutiesMidweekInfo(week);
+    total = data.total;
+    assigned = data.assigned;
+  }
+
+  if (meeting === 'duties' && dayType === 'weekend') {
+    const data = schedulesDutiesWeekendInfo(week);
     total = data.total;
     assigned = data.assigned;
   }
@@ -579,6 +593,126 @@ export const schedulesMidweekInfo = (week: string) => {
   return { total, assigned };
 };
 
+export const schedulesDutiesMidweekInfo = (week: string) => {
+  const schedules = store.get(schedulesState);
+  const dataView = store.get(userDataViewState);
+  const schedule = schedules.find((record) => record.weekOf === week);
+
+  let total = 0;
+  let assigned = 0;
+
+  if (!schedule || !schedule.midweek_meeting) {
+    return { total, assigned };
+  }
+
+  const weekType =
+    schedule.midweek_meeting.week_type.find(
+      (record) => record.type === dataView
+    )?.value ?? Week.NORMAL;
+
+  const hasNoMeeting = WEEK_TYPE_NO_MEETING.includes(weekType);
+
+  if (hasNoMeeting) {
+    return { total, assigned };
+  }
+
+  let assignment: AssignmentCongregation;
+
+  // duties_audio
+  total = total + 1;
+  assignment = schedule.midweek_meeting.duties_audio?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_video
+  total = total + 1;
+  assignment = schedule.midweek_meeting.duties_video?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_microphone_1
+  total = total + 1;
+  assignment = schedule.midweek_meeting.duties_microphone_1?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_microphone_2
+  total = total + 1;
+  assignment = schedule.midweek_meeting.duties_microphone_2?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_stage
+  total = total + 1;
+  assignment = schedule.midweek_meeting.duties_stage?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_video_conference
+  total = total + 1;
+  assignment = schedule.midweek_meeting.duties_video_conference?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_auditorium_attendant_shift_1
+  total = total + 1;
+  assignment =
+    schedule.midweek_meeting.duties_auditorium_attendant_shift_1?.find(
+      (record) => record.type === dataView
+    );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_auditorium_attendant_shift_2
+  total = total + 1;
+  assignment =
+    schedule.midweek_meeting.duties_auditorium_attendant_shift_2?.find(
+      (record) => record.type === dataView
+    );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_entrance_attendant_shift_1
+  total = total + 1;
+  assignment = schedule.midweek_meeting.duties_entrance_attendant_shift_1?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_entrance_attendant_shift_2
+  total = total + 1;
+  assignment = schedule.midweek_meeting.duties_entrance_attendant_shift_2?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  return { total, assigned };
+};
+
 export const schedulesWeekendInfo = (week: string) => {
   const openingPrayerAutoAssign = store.get(
     weekendMeetingOpeningPrayerAutoAssignState
@@ -733,6 +867,126 @@ export const schedulesWeekendInfo = (week: string) => {
     ) {
       assigned = assigned + 1;
     }
+  }
+
+  return { total, assigned };
+};
+
+export const schedulesDutiesWeekendInfo = (week: string) => {
+  const schedules = store.get(schedulesState);
+  const dataView = store.get(userDataViewState);
+  const schedule = schedules.find((record) => record.weekOf === week);
+
+  let total = 0;
+  let assigned = 0;
+
+  if (!schedule || !schedule.weekend_meeting) {
+    return { total, assigned };
+  }
+
+  const weekType =
+    schedule.weekend_meeting.week_type.find(
+      (record) => record.type === dataView
+    )?.value ?? Week.NORMAL;
+
+  const hasNoMeeting = WEEK_TYPE_NO_MEETING.includes(weekType);
+
+  if (hasNoMeeting) {
+    return { total, assigned };
+  }
+
+  let assignment: AssignmentCongregation;
+
+  // duties_audio
+  total = total + 1;
+  assignment = schedule.weekend_meeting.duties_audio?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_video
+  total = total + 1;
+  assignment = schedule.weekend_meeting.duties_video?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_microphone_1
+  total = total + 1;
+  assignment = schedule.weekend_meeting.duties_microphone_1?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_microphone_2
+  total = total + 1;
+  assignment = schedule.weekend_meeting.duties_microphone_2?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_stage
+  total = total + 1;
+  assignment = schedule.weekend_meeting.duties_stage?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_video_conference
+  total = total + 1;
+  assignment = schedule.weekend_meeting.duties_video_conference?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_auditorium_attendant_shift_1
+  total = total + 1;
+  assignment =
+    schedule.weekend_meeting.duties_auditorium_attendant_shift_1?.find(
+      (record) => record.type === dataView
+    );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_auditorium_attendant_shift_2
+  total = total + 1;
+  assignment =
+    schedule.weekend_meeting.duties_auditorium_attendant_shift_2?.find(
+      (record) => record.type === dataView
+    );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_entrance_attendant_shift_1
+  total = total + 1;
+  assignment = schedule.weekend_meeting.duties_entrance_attendant_shift_1?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
+  }
+
+  // duties_entrance_attendant_shift_2
+  total = total + 1;
+  assignment = schedule.weekend_meeting.duties_entrance_attendant_shift_2?.find(
+    (record) => record.type === dataView
+  );
+  if (assignment?.value?.length > 0) {
+    assigned = assigned + 1;
   }
 
   return { total, assigned };
@@ -1095,6 +1349,89 @@ export const schedulesGetHistoryDetails = ({
     }
   }
 
+  if (
+    assignment.startsWith('MW_DUTIES_') ||
+    assignment.startsWith('WE_DUTIES_')
+  ) {
+    const isMidweekDuty = assignment.startsWith('MW_DUTIES_');
+    const prefix = isMidweekDuty ? 'MW_DUTIES_' : 'WE_DUTIES_';
+    let dutyKey = assignment.replace(prefix, '');
+    let dutyNumber: string | null = null;
+
+    if (dutyKey.startsWith('Microphone_')) {
+      dutyNumber = dutyKey.replace('Microphone_', '');
+      dutyKey = 'Microphone';
+    }
+
+    if (dutyKey.startsWith('EntranceAttendant_Shift_')) {
+      dutyNumber = dutyKey.replace('EntranceAttendant_Shift_', '');
+      dutyKey = 'EntranceAttendant';
+    }
+
+    if (dutyKey.startsWith('AuditoriumAttendant_Shift_')) {
+      dutyNumber = dutyKey.replace('AuditoriumAttendant_Shift_', '');
+      dutyKey = 'AuditoriumAttendant';
+    }
+
+    const dutyCodeMap: Record<string, AssignmentCode> = {
+      Audio: AssignmentCode.DUTIES_Audio,
+      Video: AssignmentCode.DUTIES_Video,
+      Microphone: AssignmentCode.DUTIES_Microphone,
+      Stage: AssignmentCode.DUTIES_Stage,
+      EntranceAttendant: AssignmentCode.DUTIES_EntranceAttendant,
+      AuditoriumAttendant: AssignmentCode.DUTIES_AuditoriumAttendant,
+      VideoConference: AssignmentCode.DUTIES_VideoConference,
+    };
+
+    const dutyCode = dutyCodeMap[dutyKey];
+    const dutyTitle = assignments.find((record) => record.code === dutyCode)
+      ?.assignment_type_name[lang];
+    const dutyTitleFallbackMap: Record<string, string> = {
+      Audio: getTranslation({ key: 'tr_audio' }),
+      Video: getTranslation({ key: 'tr_video' }),
+      Microphone:
+        getTranslation({ key: 'tr_micro' }) ||
+        getTranslation({ key: 'tr_microphones' }),
+      Stage: getTranslation({ key: 'tr_stage' }),
+      EntranceAttendant: getTranslation({ key: 'tr_entranceAttendant' }),
+      AuditoriumAttendant: getTranslation({ key: 'tr_hallOverseer' }),
+      VideoConference:
+        getTranslation({ key: 'tr_dutiesVideoConference' }) ||
+        getTranslation({ key: 'tr_zoom' }),
+    };
+    const dutyBaseTitle =
+      (dutyTitle && dutyTitle.length > 0
+        ? dutyTitle
+        : dutyTitleFallbackMap[dutyKey]) || '';
+    const dutyTurnoLabel = dutyNumber ? `Turno ${dutyNumber}` : '';
+    const dutyTitleWithNumber = dutyBaseTitle
+      ? dutyTurnoLabel.length
+        ? `${dutyBaseTitle} (${dutyTurnoLabel})`
+        : dutyBaseTitle
+      : '';
+    const dutyMicroLabel = dutyNumber
+      ? dutyNumber === '1'
+        ? 'Micro 5'
+        : 'Micro 6'
+      : '';
+
+    if (dutyCode) {
+      history.assignment.code = dutyCode;
+    }
+
+    if (dutyKey === 'Microphone' && dutyMicroLabel.length > 0) {
+      history.assignment.title = dutyMicroLabel;
+    } else if (dutyTitleWithNumber && dutyTitleWithNumber.length > 0) {
+      history.assignment.title = dutyTitleWithNumber;
+    } else if (dutyBaseTitle.length > 0) {
+      history.assignment.title = dutyBaseTitle;
+    } else {
+      history.assignment.title = getTranslation({ key: 'tr_duties' });
+    }
+
+    history.assignment.meetingType = isMidweekDuty ? 'midweek' : 'weekend';
+  }
+
   return history;
 };
 
@@ -1278,7 +1615,11 @@ export const schedulesSaveAssignment = async (
       : '';
 
     const path = ASSIGNMENT_PATH[assignment];
-    const fieldUpdate = structuredClone(schedulesGetData(schedule, path));
+    let fieldUpdate = structuredClone(schedulesGetData(schedule, path));
+
+    if (fieldUpdate === undefined && path?.includes('duties_')) {
+      fieldUpdate = [];
+    }
 
     if (Array.isArray(fieldUpdate)) {
       const assigned = fieldUpdate.find((record) => record.type === dataView);
@@ -3102,7 +3443,7 @@ export const schedulesGetMeetingDate = ({
   dataView,
 }: {
   week: string;
-  meeting: 'midweek' | 'weekend';
+  meeting: MeetingType;
   forPrint?: boolean;
   key?: string;
   short?: boolean;
@@ -3143,7 +3484,7 @@ export const schedulesGetMeetingDate = ({
   const mainWeekType =
     weekTypes.find((record) => record.type === 'main')?.value ?? Week.NORMAL;
 
-  let meetingDay = 0;
+  let meetingDay = 1;
 
   if (meeting === 'midweek') {
     meetingDay =
@@ -3196,6 +3537,5 @@ export const schedulesGetMeetingDate = ({
   }
 
   date = `${year}/${String(month + 1).padStart(2, '0')}/${String(vardate).padStart(2, '0')}`;
-
   return { locale, date };
 };

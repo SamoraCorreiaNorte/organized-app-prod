@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router';
 import { useAtomValue } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 import { MeetingType } from '@definition/app';
@@ -16,11 +15,8 @@ import {
 import MonthsContainer from './months_container';
 import { addDays } from '@utils/date';
 
-const useWeekSelector = () => {
-  const location = useLocation();
-
+const useWeekSelector = (meetingType: MeetingType) => {
   const { desktopUp } = useBreakpoints();
-
   const resetSelectedWeek = useResetAtom(selectedWeekState);
 
   const sourcesValid = useAtomValue(sourcesValidState);
@@ -40,32 +36,28 @@ const useWeekSelector = () => {
     if (selectedWeek.length > 0) {
       return new Date(selectedWeek).getFullYear().toString();
     }
-
     return new Date().getFullYear().toString();
   }, [selectedWeek]);
 
-  const meeting: MeetingType = useMemo(() => {
-    return location.pathname === '/midweek-meeting' ? 'midweek' : 'weekend';
-  }, [location.pathname]);
-
   const sources = useMemo(() => {
-    if (meeting === 'midweek' && !meetingExactDate) {
+    if (meetingType === 'midweek' && !meetingExactDate) {
       return sourcesFormattedByWeek;
     }
 
     const groupedData = sourcesValid.reduce<SourcesFormattedType[]>(
       (acc, curr) => {
-        let toAdd: number;
+        let toAdd = 0;
 
-        if (meeting === 'midweek') {
-          toAdd = midweekDay - 1;
+        if (meetingType === 'midweek') {
+          toAdd = midweekDay - 2;
         }
 
-        if (meeting === 'weekend') {
-          toAdd = weekendDay - 1;
+        if (meetingType === 'weekend') {
+          toAdd = weekendDay - 2;
         }
 
         const date = addDays(curr.weekOf, toAdd);
+
         const year = date.getFullYear();
         const month = date.getMonth();
 
@@ -102,7 +94,7 @@ const useWeekSelector = () => {
 
     return groupedData;
   }, [
-    meeting,
+    meetingType,
     meetingExactDate,
     sourcesFormattedByWeek,
     sourcesValid,
@@ -113,9 +105,15 @@ const useWeekSelector = () => {
   const tabs = useMemo(() => {
     return sources.toReversed().map((year) => ({
       label: year.value.toString(),
-      Component: <MonthsContainer months={year.months} reverse={sortDown} />,
+      Component: (
+        <MonthsContainer
+          months={year.months}
+          reverse={sortDown}
+          meetingType={meetingType}
+        />
+      ),
     }));
-  }, [sources, sortDown]);
+  }, [sources, sortDown, meetingType]);
 
   const activeTab = useMemo(() => {
     return tabs.findIndex((record) => record.label === currentYear);
@@ -161,7 +159,6 @@ const useWeekSelector = () => {
     openDelete,
     handleCloseDelete,
     handleOpenDelete,
-    meeting,
     sortDown,
     handleToggleSort,
   };

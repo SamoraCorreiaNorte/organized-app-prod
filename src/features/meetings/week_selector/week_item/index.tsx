@@ -4,9 +4,9 @@ import useWeekItem from './useWeekItem';
 import Typography from '@components/typography';
 import ProgressBarSmall from '@components/progress_bar_small';
 
-const WeekItem = ({ week }: WeekItemType) => {
+const WeekItem = ({ week, meetingType }: WeekItemType) => {
   const { weekDateLocale, handleSelectWeek, isSelected, assigned, total } =
-    useWeekItem(week);
+    useWeekItem(week, meetingType);
 
   return (
     <Box

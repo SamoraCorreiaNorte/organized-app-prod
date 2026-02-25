@@ -2,6 +2,7 @@ import { JSXElementConstructor, ReactElement, ReactNode } from 'react';
 import { AssignmentCode, AssignmentFieldType } from '@definition/assignment';
 import { PersonType } from '@definition/person';
 import { SxProps } from '@mui/material';
+import { MeetingType } from '@definition/app';
 
 export type PersonSelectorType = {
   label: string;
@@ -20,6 +21,7 @@ export type PersonSelectorType = {
   schedule_id?: string;
   endIcon?: ReactElement<unknown, string | JSXElementConstructor<unknown>>;
   selectorBoxSx?: SxProps;
+  meetingType?: MeetingType;
   onEditClick?: () => void;
 };
 
