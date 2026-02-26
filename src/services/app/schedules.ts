@@ -1390,14 +1390,12 @@ export const schedulesGetHistoryDetails = ({
       Audio: getTranslation({ key: 'tr_audio' }),
       Video: getTranslation({ key: 'tr_video' }),
       Microphone:
-        getTranslation({ key: 'tr_micro' }) ||
-        getTranslation({ key: 'tr_microphones' }),
+        getTranslation({ key: 'tr_micro' }),
       Stage: getTranslation({ key: 'tr_stage' }),
-      EntranceAttendant: getTranslation({ key: 'tr_entranceAttendant' }),
-      AuditoriumAttendant: getTranslation({ key: 'tr_hallOverseer' }),
+      EntranceAttendant: getTranslation({ key: 'tr_hallOverseer' }),
+      AuditoriumAttendant: getTranslation({ key: 'tr_dutiesAuditoriumAttendant' }),
       VideoConference:
-        getTranslation({ key: 'tr_dutiesVideoConference' }) ||
-        getTranslation({ key: 'tr_zoom' }),
+        getTranslation({ key: 'tr_dutiesVideoConference' }),
     };
     const dutyBaseTitle =
       (dutyTitle && dutyTitle.length > 0
